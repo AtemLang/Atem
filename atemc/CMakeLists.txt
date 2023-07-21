@@ -6,6 +6,19 @@
 		"module/frontend/atemc.frontend.ixx"
 		"module/optimizer/atemc.optimizer.ixx"
 		"module/utils/atemc.utils.ixx"
+		"module/semantic/atemc.semantic.ixx"
+		"grammar/AtemLexer.cpp"
+		"grammar/AtemParser.cpp"
+		"grammar/AtemParserBaseListener.cpp"
+		"grammar/AtemParserBaseVisitor.cpp"
+		"grammar/AtemParserListener.cpp"
+		"grammar/AtemParserVisitor.cpp"
+		"grammar/AtemLexer.h"
+		"grammar/AtemParser.h"
+		"grammar/AtemParserBaseListener.h"
+		"grammar/AtemParserBaseVisitor.h"
+		"grammar/AtemParserListener.h"
+		"grammar/AtemParserVisitor.h"
 )
 
 target_compile_options(atemc PRIVATE /EHsc)
@@ -17,6 +30,7 @@ find_package(concurrencpp CONFIG REQUIRED)
 find_package(stdexec CONFIG REQUIRED)
 find_package(unifex CONFIG REQUIRED)
 find_package(Microsoft.GSL CONFIG REQUIRED)
+find_package(nameof CONFIG REQUIRED)
 
 find_package(LLVM CONFIG REQUIRED)
 
@@ -43,6 +57,7 @@ target_link_libraries(
 		STDEXEC::stdexec
 		unifex::unifex
 		Microsoft.GSL::GSL
+		nameof::nameof
         ${llvm_libs}
 )
 
