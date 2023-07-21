@@ -1,8 +1,11 @@
 ﻿add_executable (
-	atemc 
-		 
-		
+	atemc 		
         "module/atemc.main.ixx"
+		"module/ast/atemc.ast.ixx" 
+		"module/codegen/atemc.codegen.ixx"
+		"module/frontend/atemc.frontend.ixx"
+		"module/optimizer/atemc.optimizer.ixx"
+		"module/utils/atemc.utils.ixx"
 )
 
 target_compile_options(atemc PRIVATE /EHsc)
