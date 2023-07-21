@@ -1,0 +1,54 @@
+﻿add_executable (
+	atemc 
+		 
+		
+        "module/atemc.main.ixx"
+)
+
+target_compile_options(atemc PRIVATE /EHsc)
+
+find_package(clipp CONFIG REQUIRED)
+find_package(matchit CONFIG REQUIRED)
+find_package(antlr4-runtime CONFIG REQUIRED)
+find_package(concurrencpp CONFIG REQUIRED)
+find_package(stdexec CONFIG REQUIRED)
+find_package(unifex CONFIG REQUIRED)
+find_package(Microsoft.GSL CONFIG REQUIRED)
+
+find_package(LLVM CONFIG REQUIRED)
+
+list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
+include(HandleLLVMOptions)
+add_definitions(${LLVM_DEFINITIONS})
+
+set(Boost_INCLUDE_DIR ${_VCPKG_INSTALLED_DIR}/x64-windows/include)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+find_package(Boost COMPONENTS system REQUIRED)
+find_package(Boost REQUIRED)
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
+endif ()
+
+target_link_libraries(
+	atemc PRIVATE 
+		clipp::clipp
+        matchit::matchit
+		antlr4_shared
+		concurrencpp::concurrencpp
+		STDEXEC::stdexec
+		unifex::unifex
+		Microsoft.GSL::GSL
+        ${llvm_libs}
+)
+
+target_include_directories(atemc PRIVATE ${LLVM_INCLUDE_DIRS})
+target_include_directories(atemc PRIVATE "/")
+target_include_directories(atemc PRIVATE "${_VCPKG_INSTALLED_DIR}/x64-windows/include/antlr4-runtime")
+
+llvm_map_components_to_libnames(llvm_libs Support Core IRReader)
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET atemc PROPERTY CXX_STANDARD 23)
+endif()
