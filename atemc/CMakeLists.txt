@@ -19,6 +19,14 @@
 		"grammar/AtemParserBaseVisitor.h"
 		"grammar/AtemParserListener.h"
 		"grammar/AtemParserVisitor.h"
+		"module/ast/types/atemc.ast.types.ixx"
+		"module/ast/types/atemc.ast.types.moduleast.ixx"
+		"module/ast/types/atemc.ast.types.abstractast.ixx" 
+		"module/basic/atemc.basic.sourcelocation.ixx" 
+		"module/basic/atemc.basic.ixx" 
+		"module/ast/builder/atemc.ast.builder.ixx" 
+		"module/ast/visitor/atemc.ast.visitor.ixx" 
+		"module/basic/atemc.basic.object.ixx"
 )
 
 target_compile_options(atemc PRIVATE /EHsc)
