@@ -1,3 +1,3 @@
-export module atemco.ptimizer;
+export module atemc.optimizer;
 
 export void MyFunc();

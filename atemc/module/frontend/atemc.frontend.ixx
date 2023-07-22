@@ -2,8 +2,7 @@ module;
 
 export module atemc.frontend;
 
-import <memory>;
-import <istream>;
+import std;
 
 import atemc.ast;
 

@@ -27,9 +27,18 @@
 		"module/ast/builder/atemc.ast.builder.ixx" 
 		"module/ast/visitor/atemc.ast.visitor.ixx" 
 		"module/basic/atemc.basic.object.ixx"
+		"module/ast/types/atemc.ast.types.stmtast.ixx" 
+		"module/ast/types/atemc.ast.types.exprast.ixx" 
+		"module/ast/types/atemc.ast.types.declstmtast.ixx"
+		"module/atemc.ixx" 
+		"module/exception/atemc.exception.ixx"
+		"module/exception/atemc.exception.abstractexception.ixx"
+		"module/exception/atemc.exception.internalexception.ixx"
+		"module/exception/atemc.exception.parseexception.ixx"
+		"module/exception/atemc.exception.semanticexception.ixx"
 )
 
-target_compile_options(atemc PRIVATE /EHsc)
+target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 
 find_package(clipp CONFIG REQUIRED)
 find_package(matchit CONFIG REQUIRED)
@@ -39,6 +48,7 @@ find_package(stdexec CONFIG REQUIRED)
 find_package(unifex CONFIG REQUIRED)
 find_package(Microsoft.GSL CONFIG REQUIRED)
 find_package(nameof CONFIG REQUIRED)
+find_package(stxxl CONFIG REQUIRED)
 
 find_package(LLVM CONFIG REQUIRED)
 
@@ -66,6 +76,7 @@ target_link_libraries(
 		unifex::unifex
 		Microsoft.GSL::GSL
 		nameof::nameof
+		stxxl
         ${llvm_libs}
 )
 
@@ -76,5 +87,5 @@ target_include_directories(atemc PRIVATE "${_VCPKG_INSTALLED_DIR}/x64-windows/in
 llvm_map_components_to_libnames(llvm_libs Support Core IRReader)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set_property(TARGET atemc PROPERTY CXX_STANDARD 23)
+	set_property(TARGET atemc PROPERTY CXX_STANDARD 23)
 endif()
