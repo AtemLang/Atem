@@ -362,8 +362,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-atemc/grammar/.antlr
-atemc/grammar/*.cpp
-atemc/grammar/*.h
-atemc/grammar/*.interp
-atemc/grammar/*.tokens
+atemc/module/grammar/.antlr
+atemc/module/grammar/*.cpp
+atemc/module/grammar/*.h
+atemc/module/grammar/*.interp
+atemc/module/grammar/*.tokens

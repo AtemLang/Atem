@@ -2,8 +2,7 @@ export module atemc.ast.builder;
 
 import <memory>;
 
-import <grammar/AtemParser.h>;
-import <grammar/AtemParserBaseVisitor.h>;
+import atemc.grammar;
 
 import <antlr4-runtime.h>;
 

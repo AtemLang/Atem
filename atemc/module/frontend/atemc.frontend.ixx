@@ -5,8 +5,8 @@ export module atemc.frontend;
 import <string>;
 
 import <antlr4-runtime.h>;
-import "grammar/AtemLexer.h";
-import "grammar/AtemParser.h";
+
+import atemc.grammar;
 
 import atemc.ast;
 import atemc.basic;
