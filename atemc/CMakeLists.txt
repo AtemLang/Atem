@@ -30,6 +30,8 @@
 		"module/ast/types/atemc.ast.types.stmtast.ixx" 
 		"module/ast/types/atemc.ast.types.exprast.ixx" 
 		"module/ast/types/atemc.ast.types.declstmtast.ixx"
+		"module/ast/types/atemc.ast.types.unaryexprast.ixx"
+		"module/ast/types/atemc.ast.types.binaryexprast.ixx"
 		"module/atemc.ixx" 
 		"module/exception/atemc.exception.ixx"
 		"module/exception/atemc.exception.abstractexception.ixx"
@@ -48,6 +50,14 @@
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.compositetype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.functiontype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.typetype.ixx"
+		"module/ast/types/atemc.ast.types.unaryexprast.ixx" 
+		"module/ast/types/atemc.ast.types.ternaryexprast.ixx" 
+		"module/ast/types/atemc.ast.types.ifexprast.ixx"
+		"module/ast/types/atemc.ast.types.forexprast.ixx"
+		"module/ast/types/atemc.ast.types.whileexprast.ixx"
+		"module/ast/types/atemc.ast.types.repeatwhileexprast.ixx"
+		"module/ast/operators/atemc.ast.operators.ixx"
+		"module/ast/operators/atemc.ast.operators.abstractoperator.ixx"
 )
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
