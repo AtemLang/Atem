@@ -58,7 +58,16 @@
 		"module/ast/types/atemc.ast.types.repeatwhileexprast.ixx"
 		"module/ast/operators/atemc.ast.operators.ixx"
 		"module/ast/operators/atemc.ast.operators.abstractoperator.ixx"
-)
+		"module/ast/types/atemc.ast.types.literalexprast.ixx" 
+		"module/ast/types/atemc.ast.types.integerliteralexprast.ixx" 
+		"module/ast/types/atemc.ast.types.floatingpointliteralexprast.ixx" 
+		"module/ast/types/atemc.ast.types.booleanliteralexprast.ixx" 
+		"module/ast/types/atemc.ast.types.arrayliteralexprast.ixx"
+		"module/ast/types/atemc.ast.types.characterliteralexprast.ixx" 
+		"module/ast/types/atemc.ast.types.stringliteralexprast.ixx"
+		"module/ast/types/atemc.ast.types.nullliteralexprast.ixx"
+		"module/ast/types/atemc.ast.types.undefinedliteralexprast.ixx"
+ "module/ast/types/atemc.ast.types.deferexprast.ixx")
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 

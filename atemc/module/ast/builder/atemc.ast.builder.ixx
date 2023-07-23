@@ -22,7 +22,7 @@ export namespace atemc
 
 		auto build(AtemParser::ProgramContext* ctx) -> std::shared_ptr<ModuleAST>
 		{
-			
+			return nullptr;
 		}
 	};
 }
