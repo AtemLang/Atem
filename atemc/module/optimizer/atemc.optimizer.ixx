@@ -10,9 +10,9 @@ module;
 #include <llvm/Transforms/Scalar.h>
 #include <llvm/Transforms/Scalar/GVN.h>
 
-export module atemc.optimizer;
+#include <memory>
 
-import <memory>;
+export module atemc.optimizer;
 
 import atemc.basic;
 

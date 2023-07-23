@@ -1,6 +1,7 @@
 export module atemc.ast.types.abstractast;
 
-import std;
+import <vector>;
+import <memory>;
 
 import atemc.basic;
 

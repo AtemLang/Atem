@@ -43,6 +43,11 @@
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.integertype.ixx" 
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.booleantype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.floatingpointtype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.unittype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.pointertype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.compositetype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.functiontype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.typetype.ixx"
 )
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
@@ -73,6 +78,18 @@ if (Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 endif ()
 
+llvm_map_components_to_libnames(
+	llvm_libs 
+	CodeGen
+	Core
+	Demangle
+	Extensions
+	FileCheck
+	Passes
+	IRReader
+	TransformUtils
+)
+
 target_link_libraries(
 	atemc PRIVATE 
 		clipp::clipp
@@ -90,8 +107,6 @@ target_link_libraries(
 target_include_directories(atemc PRIVATE ${LLVM_INCLUDE_DIRS})
 target_include_directories(atemc PRIVATE "/")
 target_include_directories(atemc PRIVATE "${_VCPKG_INSTALLED_DIR}/x64-windows/include/antlr4-runtime")
-
-llvm_map_components_to_libnames(llvm_libs Support Core IRReader)
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
 	set_property(TARGET atemc PROPERTY CXX_STANDARD 23)

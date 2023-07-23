@@ -1,20 +1,20 @@
-export module atemc.semantic.types.concrete.integertype;
+export module atemc.semantic.types.concrete.compositetype;
 
-import atemc.semantic.types.concrete.compositetype;
+export import atemc.semantic.types.concrete.abstracttype;
 
 export namespace atemc
 {
-	class IntegerType : public CompositeType
+	class CompositeType : public AbstractType
 	{
 	public:
-		IntegerType()
+		CompositeType()
 		{
 			
 		}
 
 		auto operator==(const AbstractType& that) const -> bool override
 		{
-			if(auto that_ptr = dynamic_cast<const IntegerType*>(&that))
+			if(auto that_ptr = dynamic_cast<const CompositeType*>(&that))
 			{
 				return true;
 			}
