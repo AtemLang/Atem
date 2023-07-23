@@ -67,7 +67,23 @@
 		"module/ast/types/atemc.ast.types.stringliteralexprast.ixx"
 		"module/ast/types/atemc.ast.types.nullliteralexprast.ixx"
 		"module/ast/types/atemc.ast.types.undefinedliteralexprast.ixx"
- "module/ast/types/atemc.ast.types.deferexprast.ixx")
+		"module/ast/types/atemc.ast.types.deferexprast.ixx"
+		"module/ast/types/atemc.ast.types.declarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.constantdeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.variabledeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.classdeclarationexprast.ixx" 
+		"module/ast/types/atemc.ast.types.structdeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.enumerationdeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.protocoldeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.uniondeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.extensiondeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.functiondeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.projectdeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.packagedeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.moduledeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.namespacedeclarationexprast.ixx"
+		"module/ast/types/atemc.ast.types.testdeclarationexprast.ixx"
+)
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 
