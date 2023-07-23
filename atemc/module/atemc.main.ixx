@@ -12,4 +12,5 @@ export int main(int argc, const char* argv[])
 	{
 		exception.printStacktrace();
 	}
+	return 0;
 }

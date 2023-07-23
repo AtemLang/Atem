@@ -1,3 +1,3 @@
 export module atemc.semantic;
 
-export void MyFunc();
+export import atemc.semantic.types;

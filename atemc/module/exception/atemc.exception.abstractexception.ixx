@@ -9,12 +9,13 @@ import atemc.basic;
 
 export namespace atemc
 {
+	namespace bs = boost::stacktrace;
 	class AbstractException : public std::exception, public AtemcObject
 	{
 		const std::string msg_;
-		const boost::stacktrace::stacktrace current_stacktrace_;
+		const bs::stacktrace current_stacktrace_;
 	public:
-		AbstractException(std::string_view msg, const boost::stacktrace::stacktrace& current_stacktrace = boost::stacktrace::stacktrace())
+		AbstractException(std::string_view msg, const bs::stacktrace& current_stacktrace = bs::stacktrace())
 			: msg_(msg), current_stacktrace_(current_stacktrace)
 		{}
 		auto what() const noexcept -> const char* override
@@ -24,10 +25,11 @@ export namespace atemc
 		virtual auto printStacktrace() const noexcept -> void
 		{
 			std::println("Exception \"{}\" with stacktrace: ", this->msg_);
-			for(const auto& entry : this->current_stacktrace_)
+			for(auto entry : this->current_stacktrace_)
 			{
-				std::println(
-					"\tat {}(0x{:x}), file {}, line {}", 
+				std::println
+				(
+					"\tat {}({}) in file {} line {}", 
 					entry.name(),
 					entry.address(),
 					entry.source_file(), 

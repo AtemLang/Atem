@@ -36,6 +36,13 @@
 		"module/exception/atemc.exception.internalexception.ixx"
 		"module/exception/atemc.exception.parseexception.ixx"
 		"module/exception/atemc.exception.semanticexception.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.abstracttype.ixx" 
+		"module/semantic/types/visitor/atemc.semantic.types.visitor.ixx"
+		"module/semantic/types/atemc.semantic.types.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.ixx" 
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.integertype.ixx" 
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.booleantype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.floatingpointtype.ixx"
 )
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
