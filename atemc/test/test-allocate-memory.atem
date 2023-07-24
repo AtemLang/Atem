@@ -1,0 +1,13 @@
+_ := test "Allocating Memory" {
+    println := import func std.io.print.println
+    GeneralPurposeAllocator := import class std.memory.allocator.GeneralPurposeAllocator;
+
+    gpa := var GeneralPurposeAllocator.init()
+    defer { gpa.deallocateAll() }
+    allocator := var gpa.getAllocator()
+    
+    buffer := var try! allocator.allocate(size = 64)
+    println("Get a buffer: ${buffer.getRawPointer()}")
+    
+    return 0
+}

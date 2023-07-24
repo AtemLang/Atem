@@ -1,0 +1,27 @@
+println := import func std.io.print.println
+
+fib := func (n: UInt64) -> UInt64 throws pure
+require {
+    expect n > 0
+    ensure with ret := return ret >= 0
+}
+{
+    if n == 1 or n == 2 {
+        return 1
+    } else {
+        f1 := var 1 as Int64
+        f2 := var 1 as Int64
+        f3 := var -1 as Int64
+        for i in 3...n {
+            f3 = f1 + f2
+            f1 = f2
+            f2 = f3
+        }
+        return f3
+    }
+    unreachable
+}
+
+_ = test "non-recursive fibonacci" {
+    println("${fib(10)}") //print 55
+}

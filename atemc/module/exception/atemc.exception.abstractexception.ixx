@@ -22,6 +22,7 @@ export namespace atemc
 		{
 			return this->msg_.c_str();
 		}
+		auto getStacktrace() const -> bs::stacktrace { return this->current_stacktrace_; }
 		virtual auto printStacktrace() const noexcept -> void
 		{
 			std::println("Exception \"{}\" with stacktrace: ", this->msg_);

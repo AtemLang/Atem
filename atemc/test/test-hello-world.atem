@@ -1,0 +1,5 @@
+println := import func std.io.print.println
+
+main := func {
+    println("Hello World!")
+}

@@ -7,6 +7,7 @@ import atemc.grammar;
 import <antlr4-runtime.h>;
 
 import atemc.ast.types;
+import atemc.basic;
 
 export namespace atemc
 {
@@ -19,7 +20,7 @@ export namespace atemc
 	public:
 		explicit ASTBuilder(AtemParser* parser) : parser_(parser) {}
 
-		auto build(AtemParser::ProgramContext* ctx) -> std::shared_ptr<ModuleAST>
+		auto build(AtemParser::ProgramContext* ctx, std::shared_ptr<RawSourceFile> root_source_file_ptr) -> std::shared_ptr<SourceAST>
 		{
 			return nullptr;
 		}

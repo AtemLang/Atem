@@ -535,21 +535,41 @@ operator
 	| array_index_operator
 	;
 
-arithmetic_operator
+add_operator
 	: Add 
 	| OverflowingAdd 
 	| SaturatingAdd 
-	| Sub 
+	;
+
+subtract_operator
+	: Sub 
 	| OverflowingSub 
 	| SaturatingSub
-	| Mul 
+	;
+
+multiply_operator
+	: Mul 
 	| OverflowingMul 
 	| SaturatingMul
-	| Divide 
+	;
+
+divide_operator
+	: Divide 
 	| RemainderDivide
-	| Power 
+	;
+
+power_operator
+	: Power 
 	| OverflowingPower 
 	| SaturatingPower
+	;
+
+arithmetic_operator
+	: add_operator
+	| subtract_operator
+	| multiply_operator
+	| divide_operator
+	| power_operator
 	;
 
 negation_operator
@@ -605,10 +625,11 @@ binary_bit_operator
 	| BitLeftShift 
 	| SaturatingBitLeftShift 
 	| BitRightShift
+	| BitXor
 	;
 
 unary_bit_operator:
-	BitNot | BitXor;
+	BitNot;
 
 pointer_operator
 	: PointerType 

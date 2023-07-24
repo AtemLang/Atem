@@ -1,0 +1,35 @@
+first_25_primes := val comptime firstNPrimes(25)
+sum_of_first_25_primes := val comptime sum(first_25_primes)
+
+firstNPrimes := func (size n: comptime UInt64) -> [n]UInt64 {
+    prime_list: [n]UInt64 = var undefined
+    next_index: UInt64 = var 0
+    test_number: UInt64 = var 2
+    while next_index < prime_list.length outerloop: {
+        test_prime_index: UInt64 = var 0
+        is_prime := var true
+        while test_prime_index < next_index innerloop: {
+            if test_number % prime_list[test_prime_index] == 0 {
+                is_prime = false
+                break innerloop
+            }
+        } with then test_prime_index += 1
+        if is_prime {
+            prime_list[next_index] = test_number
+            next_index += 1
+        }
+    } with then test_number += 1
+    return prime_list
+}
+
+sum := func (numbers: []const UInt64) -> UInt64 {
+    result: UInt64 = var 0
+    for x in numbers {
+        result += x
+    }
+    return result
+}
+
+_ := test "variable values" {
+    assert sum_of_first_25_primes == 1060
+}

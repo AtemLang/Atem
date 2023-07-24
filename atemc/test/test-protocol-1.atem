@@ -1,0 +1,40 @@
+Printable := protocol member {
+    require print := func () -> () throws default = {
+        println("{}", self)
+    }
+}
+
+Point := struct member {
+    public x := var 0 as Int8
+    public y := var 0 as Int8
+}
+
+PrintablePoint := class extend {
+    inherit Point
+    impl Printable with {
+        require print := func () -> () throws {
+            println("(${self.x}, ${self.y})")
+        }
+    }
+} init {
+    := (x: Int8, y: Int8) {
+        self.x = x
+        self.y = y
+    }
+    := (coord: Int8) {
+        self.init(coord, coord)
+    }
+} deinit {
+    := {
+        println("Point (${self.x}, ${self.y}) is deinitializing")
+    }
+} member {
+    public isAtOrigin := func () -> bool
+        if self.x == 0 and self.y == 0 then true else false
+}
+
+_ := test "Printable Point" {
+    point := val PrintablePoint.init(1, 2)
+    point.print()   //print (1, 2)
+    println("${point.isAtOrigin()}")  //print false
+}

@@ -1,0 +1,5 @@
+__map := class(keyType K: comptime type, valueType V: comptime type) member {
+   public __storage: [K: V] = var default
+}
+
+m: map(keyType = String, valueType = Int64) = var .init()

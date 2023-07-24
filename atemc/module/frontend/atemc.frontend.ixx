@@ -2,6 +2,7 @@ module;
 
 export module atemc.frontend;
 
+import <memory>;
 import <string>;
 
 import <antlr4-runtime.h>;
@@ -56,10 +57,11 @@ export namespace atemc
 
 	class FrontEnd : public AtemcObject
 	{
-		static auto parse(std::istream& stream) -> std::shared_ptr<ModuleAST>
+	public:
+		static auto parse(std::shared_ptr<RawSourceFile> source_file_ptr) -> std::shared_ptr<SourceAST>
 		{
 			using namespace antlr4;
-			ANTLRInputStream input_stream(stream);
+			ANTLRInputStream input_stream(*source_file_ptr->getSourceFileStream());
 			AtemLexer lexer(&input_stream);
 			CommonTokenStream tokens(&lexer);
 			AtemParser parser(&tokens);
@@ -76,7 +78,7 @@ export namespace atemc
 			AtemParser::ProgramContext* tree = parser.program();
 
 			ASTBuilder ast_builder(&parser);
-			return ast_builder.build(tree);
+			return ast_builder.build(tree, source_file_ptr);
 		}
 	};
 }

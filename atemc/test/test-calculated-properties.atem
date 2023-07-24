@@ -1,0 +1,23 @@
+Point := class member {
+    public x := var 0.0
+    public y := var 0.0
+}
+Size := class member {
+    public width := var 0.0
+    public height := var 0.0
+}
+Rectangle := class member {
+    public origin := var Point.init()
+    public size := var Size.init()
+    public center := var Point.init() with {
+        := get {
+            centerX := val self.origin.x + (self.size.width / 2)
+            centerY := val self.origin.y + (self.size.height / 2)
+            return Point.init(x = centerX, y = centerY)
+        }
+        := set(newCenter) {
+            self.origin.x = self.newCenter.x - (self.size.width / 2)
+            self.origin.y = self.newCenter.y - (self.size.height / 2)
+        }
+    }
+}

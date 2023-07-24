@@ -1,0 +1,87 @@
+test_project := project {
+    .name = "Test Project",
+    .dependencies = {
+        {"fibers"},
+        {""},
+        {}
+    }
+    .build {
+        .architecture = .x64
+        .os = .windows
+        .feature = {
+            .runtime_index_check
+        }
+        .root = "test.atem"
+    }
+}
+
+std := package
+
+std.io.print := module
+
+Writer := struct member {
+    public print := func (format: comptime String, args: (...)) -> Unit {
+        State := enum {
+            start,
+            open_brace,
+            close_brace,
+        } 
+
+        start_index: UInt128 = var comptime 0
+        state := var comptime State.start
+        next_arg: UInt128 = var comptime 0
+
+        use i: UInt128 = var 0 in 
+            comptime for c in format {
+                state match {
+                    .start: c match {
+                        '{': {
+                            if start_index < i then
+                                try self.write(format[start_index...i])
+                            state = .open_brace
+                        }
+                        '}': {
+                            if start_index < i then
+                                try self.write(format[start_index...i])
+                            state = .close_brace
+                        }
+                    } else {}
+                    .open_brace: c match {
+                        '{': {
+                            state = .start
+                            start_index = i
+                        }
+                        '}': {
+                            try self.printValue(args[next_arg])
+                            next_arg += 1
+                            state = .start
+                            start_index = i + 1
+                        }
+                    } else ##compileError("Unknown format character {}", c)
+                    .close_brace: c match {
+                        '}': {
+                            state = .start
+                            start_index = i
+                        }
+                    } else ##compileError("Unmatched '}' in format string")
+                }
+            } then i += 1
+        comptime if arg.length != next_arg then ##compileError("Unused format arguments")
+        comptime if state != .start then ##compileError("Incomplete format string {}", format)
+        if start_index < format.length then
+            try self.write(format[start_index...format.length])
+        try self.flush()
+    }
+
+    write := func (value: string) -> Unit throws {
+        _ = self;
+        _ = value;
+    }
+    public printValue := func (value: _) -> Unit throws {
+        _ = self;
+        _ = value;
+    }
+    flush := func () -> Unit throws {
+        _ = self;
+    }
+}

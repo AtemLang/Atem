@@ -1,0 +1,12 @@
+println := import func std.io.print.println
+
+fib := func (n: UInt64) -> Int64 recursive throws pure
+require { 
+    expect n > 0
+    ensure with ret := return ret >= 0
+}
+if n == 1 or n == 2 then 1 else self(n - 1) + self(n - 2)
+
+_ := test "recursive fibonacci" {
+    println("${fib(10)}") //print 55
+}

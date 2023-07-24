@@ -1,6 +1,6 @@
 ﻿add_executable (
 	atemc 		
-        "module/atemc.main.ixx"
+        "module/main/atemc.main.ixx"
 		"module/ast/atemc.ast.ixx" 
 		"module/codegen/atemc.codegen.ixx"
 		"module/frontend/atemc.frontend.ixx"
@@ -20,9 +20,10 @@
 		"module/grammar/AtemParserListener.h"
 		"module/grammar/AtemParserVisitor.h"
 		"module/ast/types/atemc.ast.types.ixx"
-		"module/ast/types/atemc.ast.types.moduleast.ixx"
+		"module/ast/types/atemc.ast.types.sourceast.ixx"
 		"module/ast/types/atemc.ast.types.abstractast.ixx" 
 		"module/basic/atemc.basic.sourcelocation.ixx" 
+		"module/basic/atemc.basic.rawsourcefile.ixx" 
 		"module/basic/atemc.basic.ixx" 
 		"module/ast/builder/atemc.ast.builder.ixx" 
 		"module/ast/visitor/atemc.ast.visitor.ixx" 
@@ -90,11 +91,11 @@
 		"module/grammar/atemc.grammar.listener.ixx"
 		"module/grammar/atemc.grammar.basevisitor.ixx"
 		"module/grammar/atemc.grammar.visitor.ixx"
-)
+ "module/exception/atemc.exception.exceptionhandler.ixx")
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 
-find_package(clipp CONFIG REQUIRED)
+find_package(cxxopts CONFIG REQUIRED)
 find_package(matchit CONFIG REQUIRED)
 find_package(antlr4-runtime CONFIG REQUIRED)
 find_package(concurrencpp CONFIG REQUIRED)
@@ -134,7 +135,7 @@ llvm_map_components_to_libnames(
 
 target_link_libraries(
 	atemc PRIVATE 
-		clipp::clipp
+		cxxopts::cxxopts
         matchit::matchit
 		antlr4_shared
 		concurrencpp::concurrencpp
