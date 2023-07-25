@@ -28,19 +28,6 @@ export namespace atemc
 			return this->column <=> that.column;
 		}
 	};
-
-	auto operator<=>(const SourceLocation& a, const SourceLocation& b) -> std::strong_ordering
-		{
-			if(const auto cmp = a.source_file_path <=> b.source_file_path; not std::is_eq(cmp))
-			{
-				return a.source_file_path <=> b.source_file_path;
-			}
-			if (const auto cmp = a.line <=> b.line; not std::is_eq(cmp))
-			{
-				return a.line <=> b.line;
-			}
-			return a.column <=> b.column;
-		}
 }
 
 export {

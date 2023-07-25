@@ -15,6 +15,13 @@ export namespace atemc
 		SourceLocation source_location_{};
 
 	public:
+		AbstractAST() = default;
+		AbstractAST(const AbstractAST& that) = default;
+		AbstractAST(AbstractAST&& that) = default;
+
+		auto operator=(const AbstractAST& that) -> AbstractAST& = default;
+		auto operator=(AbstractAST&& that) -> AbstractAST& = default;
+
 		virtual ~AbstractAST() = default;
 
 		auto getSourceLocation() const noexcept -> SourceLocation { return this->source_location_; }
@@ -29,9 +36,4 @@ export namespace atemc
 			return this->source_location_.operator<=>(that.source_location_);
 		}
 	};
-
-	auto operator<=>(const AbstractAST& a, const AbstractAST& b) -> std::strong_ordering
-	{
-		return a.getSourceLocation().operator<=>(b.getSourceLocation());
-	}
 }

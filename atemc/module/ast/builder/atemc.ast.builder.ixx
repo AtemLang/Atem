@@ -3,6 +3,7 @@ export module atemc.ast.builder;
 import <memory>;
 import <any>;
 import <map>;
+import <tuple>;
 
 import atemc.grammar.basevisitor;
 import atemc.grammar.parser;
@@ -54,7 +55,7 @@ export namespace atemc
 			auto type = std::any_cast<TypeExprAST>(this->visit(ctx->type_expression()));
 			return std::make_shared<AggregateInitializationExprAST>(
 					type,
-					std::any_cast<std::map<ExprAST, ExprAST, TypeExprASTHash>>(
+					std::any_cast<std::map<ExprAST, ExprAST>>(
 						this->visitAggregate_initialization_list(ctx->aggregate_initialization_expression()->aggregate_initialization_list())
 					)
 				);
@@ -63,11 +64,11 @@ export namespace atemc
 		auto visitAggregate_initialization_list(AtemParser::Aggregate_initialization_listContext* ctx)
 			-> std::any override
 		{
-			std::map<ExprAST, ExprAST, TypeExprASTHash> aggregate_members;
+			std::map<ExprAST, ExprAST> aggregate_members;
 			for(auto aggregate_member : ctx->aggregate_initialization_member())
 			{
-				auto expr_pair = std::any_cast<std::pair<ExprAST, ExprAST>>(this->visitAggregate_initialization_member(aggregate_member));
-				aggregate_members.insert(expr_pair.first, expr_pair.second);
+				auto [k, v] = std::any_cast<std::tuple<ExprAST, ExprAST>>(this->visitAggregate_initialization_member(aggregate_member));
+				aggregate_members.at(k) = v;
 			}
 			return aggregate_members;
 		}
@@ -81,7 +82,7 @@ export namespace atemc
 			}
 			auto expr = std::any_cast<ExprAST>(this->visit(ctx->expression()));
 			auto member = std::any_cast<ExprAST>(this->visit(ctx->aggregate_member()->expression()));
-			return std::pair(member, expr);
+			return std::make_tuple(member, expr);
 		}
 	};
 }

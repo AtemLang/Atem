@@ -1,3 +1,3 @@
 export module atemc.semantic.types.concrete.booleantype;
 
-export void MyFunc();
+import atemc.semantic.types.concrete.abstracttype;
