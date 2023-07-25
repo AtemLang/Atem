@@ -1,6 +1,7 @@
 export module atemc.ast.types;
 
 export import atemc.ast.types.abstractast;
+export import atemc.ast.types.aggregateinitializationexprast;
 export import atemc.ast.types.arrayliteralexprast;
 export import atemc.ast.types.binaryexprast;
 export import atemc.ast.types.booleanliteralexprast;
@@ -31,6 +32,7 @@ export import atemc.ast.types.stringliteralexprast;
 export import atemc.ast.types.structdeclarationexprast;
 export import atemc.ast.types.ternaryexprast;
 export import atemc.ast.types.testdeclarationexprast;
+export import atemc.ast.types.exprast;
 export import atemc.ast.types.unaryexprast;
 export import atemc.ast.types.uniondeclarationexprast;
 export import atemc.ast.types.undefinedliteralexprast;

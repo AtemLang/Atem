@@ -5,10 +5,10 @@ import <memory>;
 
 import atemc.basic;
 
+export class ASTVisitor;
+
 export namespace atemc
 {
-	class ASTVisitor;
-
 	class AbstractAST : public AtemcObject
 	{
 		SourceLocation source_location_{};

@@ -91,7 +91,7 @@
 		"module/grammar/atemc.grammar.listener.ixx"
 		"module/grammar/atemc.grammar.basevisitor.ixx"
 		"module/grammar/atemc.grammar.visitor.ixx"
- "module/exception/atemc.exception.exceptionhandler.ixx")
+ "module/exception/atemc.exception.exceptionhandler.ixx" "module/ast/types/atemc.ast.types.aggregateinitializationexprast.ixx" "module/ast/types/atemc.ast.types.typeexprast.ixx")
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 

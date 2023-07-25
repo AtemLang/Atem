@@ -20,8 +20,6 @@ export int main(int argc, const char* argv[])
 
 	std::set_terminate(ExceptionHandler);
 
-	throw AbstractException("awa");
-
 	Options option("Atem Compiler", "Experimental Compiler for Atem Programming Language\nDistributed under GPL-3.0-or-later license\nCopyright Atem Language Team, 2023");
 
 	option.add_options()
@@ -43,6 +41,8 @@ export int main(int argc, const char* argv[])
 		try
 		{
 			std::shared_ptr<RawSourceFile> source_file_ptr = std::make_shared<RawSourceFile>(result["source"].as<std::string>());
+			FrontEnd frontend;
+			auto parsed_root_ptr = frontend.parseRootSourceFile(source_file_ptr);
 		}
 		catch(const std::invalid_argument& exception)
 		{

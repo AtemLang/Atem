@@ -1,3 +1,11 @@
 export module atemc.ast.types.declarationexprast;
 
-export void MyFunc();
+import atemc.ast.types.exprast;
+
+export namespace atemc
+{
+	class DeclarationExprAST : public ExprAST
+	{
+		
+	};
+}

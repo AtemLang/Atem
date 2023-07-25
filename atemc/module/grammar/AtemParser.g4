@@ -350,7 +350,7 @@ import_kind
 	;
 
 project_declaration
-	: KeywordProject attributes? aggregate_initialization_list?;
+	: KeywordProject attributes? aggregate_initialization_expression?;
 
 package_declaration
 	: KeywordPackage udt_parameter_clause? attributes? package_member_list?;
@@ -770,20 +770,23 @@ expression
 	| builtin_function_operator builtin_function_name function_call_operator			#builtin_function_call_expression_
 	| Underscore																		#wildcard_expression_
 	| KeywordAsm LeftParenthese string_literal RightParenthese							#assembly_expression_
-	| aggregate_initialization_expression												#aggregate_initialization_expression_
+	| type_expression aggregate_initialization_expression								#aggregate_initialization_expression_
 	| capture_operator LeftCurly expression RightCurly									#capture_expression_
 	;
 
 aggregate_initialization_expression
-	: type_expression Dot KeywordInit aggregate_initialization_list;
+	: Dot KeywordInit aggregate_initialization_list;
 
 aggregate_initialization_list
 	: LeftCurly aggregate_initialization_member+ RightCurly;
 
 aggregate_initialization_member
-	: Dot expression Assign expression
+	: Dot aggregate_member Assign expression
 	| Dot expression aggregate_initialization_list
 	;
+
+aggregate_member
+	: expression;
 
 code_block_expression: code_block;
 
@@ -892,7 +895,7 @@ type_expression
 	| KeywordFallthrough																								#fallthrough_type_expression_
 	| KeywordThrow expression																							#throw_type_expression_
 	| KeywordReturn type_expression?																					#return_type_expression_
-	| KeywordBreak code_block_name? (KeywordWith type_expression)?												#break_type_expression_
+	| KeywordBreak code_block_name? (KeywordWith type_expression)?														#break_type_expression_
 	| KeywordBreak expression																							#break_type_expression_
 	| KeywordContinue code_block_name?																					#continue_type_expression_
 	| KeywordComptime type_expression																					#comptime_type_expression_
