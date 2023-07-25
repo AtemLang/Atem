@@ -2,6 +2,7 @@ export module atemc.ast.types.abstractast;
 
 import <vector>;
 import <memory>;
+import <compare>;
 
 import atemc.basic;
 
@@ -22,5 +23,15 @@ export namespace atemc
 		virtual auto accept(ASTVisitor* visitor) -> void = 0;
 
 		virtual auto getChildren() const -> std::vector<std::shared_ptr<AbstractAST>> { return {}; }
+
+		virtual auto operator<=>(const AbstractAST& that) const -> std::strong_ordering
+		{
+			return this->source_location_.operator<=>(that.source_location_);
+		}
 	};
+
+	auto operator<=>(const AbstractAST& a, const AbstractAST& b) -> std::strong_ordering
+	{
+		return a.getSourceLocation().operator<=>(b.getSourceLocation());
+	}
 }

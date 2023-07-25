@@ -1,5 +1,7 @@
 export module atemc.semantic.types.concrete.abstracttype;
 
+import <string>;
+
 import atemc.basic;
 
 export namespace atemc
@@ -15,5 +17,7 @@ export namespace atemc
 		virtual ~AbstractType() = default;
 
 		virtual auto accept(TypeVisitor* visitor) -> void = 0;
+
+		virtual auto getMangledTypeString() const -> std::string = 0;
 	};
 }

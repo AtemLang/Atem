@@ -12,7 +12,6 @@ import <antlr4-runtime.h>;
 import atemc.ast.types;
 import atemc.basic;
 import atemc.exception;
-#include <llvm/IR/Type.h>
 
 export namespace atemc
 {
@@ -55,7 +54,7 @@ export namespace atemc
 			auto type = std::any_cast<TypeExprAST>(this->visit(ctx->type_expression()));
 			return std::make_shared<AggregateInitializationExprAST>(
 					type,
-					std::any_cast<std::map<ExprAST, ExprAST>>(
+					std::any_cast<std::map<ExprAST, ExprAST, TypeExprASTHash>>(
 						this->visitAggregate_initialization_list(ctx->aggregate_initialization_expression()->aggregate_initialization_list())
 					)
 				);
@@ -64,10 +63,11 @@ export namespace atemc
 		auto visitAggregate_initialization_list(AtemParser::Aggregate_initialization_listContext* ctx)
 			-> std::any override
 		{
-			std::map<ExprAST, ExprAST> aggregate_members;
+			std::map<ExprAST, ExprAST, TypeExprASTHash> aggregate_members;
 			for(auto aggregate_member : ctx->aggregate_initialization_member())
 			{
-				aggregate_members.insert(std::any_cast<std::pair<ExprAST, ExprAST>>(this->visitAggregate_initialization_member(aggregate_member)));
+				auto expr_pair = std::any_cast<std::pair<ExprAST, ExprAST>>(this->visitAggregate_initialization_member(aggregate_member));
+				aggregate_members.insert(expr_pair.first, expr_pair.second);
 			}
 			return aggregate_members;
 		}
