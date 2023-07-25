@@ -706,7 +706,7 @@ expression
 	| expression function_call_operator													#member_function_call_expression_
 	| expression unary_optional_unwrapping_operator										#unary_optional_unwrapping_expression_
 	| expression binary_optional_unwrapping_operator expression							#binary_optional_unwrapping_expression_
-	| expression function_call_operator													#function_call_expresison_
+	| expression function_call_operator													#function_call_expression_
 	| expression arithmetic_operator expression 										#arithmetic_expression_
 	| negation_operator expression														#negation_expression_
 	| path_expression																	#path_expression_
@@ -752,7 +752,7 @@ expression
 	| expression inject_operator expression												#inject_expression_
 	| inject_operator expression														#inplace_inject_expression_
 	| reflect_operator LeftCurly statements RightCurly									#fragment_expression_
-	| expression PointerDeref															#derefence_expression_
+	| expression PointerDeref															#dereference_expression_
 	| expression ObjectAddress															#object_address_expression_
 	| Reify expression?																	#placeholder_expression_
 	| expression pipeline_operator expression											#pipeline_expression_
@@ -760,7 +760,7 @@ expression
 	| KeywordUse declaration_statement_or_list KeywordIn expression						#use_in_expression_
 	| KeywordUsing expression															#using_expression_
 	| KeywordDefer defer_kind? expression_or_block										#defer_expression_
-	| declaration_expression															#declaretion_expression_
+	| declaration_expression															#declaration_expression_
 	| if_expression																		#if_expression_
 	| while_expression						 											#while_expression_
 	| repeat_while_expression															#repeat_while_expression_
