@@ -5,14 +5,14 @@ import <any>;
 import <map>;
 import <tuple>;
 
-import atemc.grammar.basevisitor;
-import atemc.grammar.parser;
-
 import <antlr4-runtime.h>;
 
 import atemc.ast.types;
 import atemc.basic;
 import atemc.exception;
+import atemc.grammar.basevisitor;
+import atemc.grammar.parser;
+import atemc.semantic.types;
 
 export namespace atemc
 {
@@ -410,7 +410,74 @@ export namespace atemc
 		auto visitParentheses_type_expression_(AtemParser::Parentheses_type_expression_Context *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitFor_type_expression_(AtemParser::For_type_expression_Context *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitIdentifier_type_expression_(AtemParser::Identifier_type_expression_Context *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitBasic_type(AtemParser::Basic_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }
+		auto visitBasic_type(AtemParser::Basic_typeContext *ctx) -> std::any override
+		{
+			if(auto ctx_ptr = ctx->boolean_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<BooleanType>()
+					)
+				);
+			}
+			if(auto ctx_ptr = ctx->integer_type())
+			{
+				auto width = [&]()
+					{
+						if(auto ptr = ctx_ptr->KeywordInt())
+						{
+							std::string str = ptr->getText();
+							str.erase(str.begin());
+							str.erase(str.begin());
+							str.erase(str.begin());
+							return std::stoull(str);
+						}
+						if(auto ptr = ctx_ptr->KeywordUInt())
+						{
+							std::string str = ptr->getText();
+							str.erase(str.begin());
+							str.erase(str.begin());
+							str.erase(str.begin());
+							str.erase(str.begin());
+							return std::stoull(str);
+						}
+						if(auto ptr = ctx_ptr->KeywordUsize())
+						{
+							return sizeof(size_t);
+						}
+						return sizeof(size_t);
+					}();
+				if(auto ptr = ctx_ptr->KeywordInt())
+				{
+					return std::make_shared<TypeExprAST>(
+						std::dynamic_pointer_cast<AbstractType>(
+							std::make_shared<SignedIntegerType>(
+								width
+							)
+						)
+					);
+				}
+				if(auto ptr = ctx_ptr->KeywordUInt())
+				{
+					return std::make_shared<TypeExprAST>(
+						std::dynamic_pointer_cast<AbstractType>(
+							std::make_shared<UnsignedIntegerType>(
+								width
+							)
+						)
+					);
+				}
+				if(auto ptr = ctx_ptr->KeywordUsize())
+				{
+					return std::make_shared<TypeExprAST>(
+						std::dynamic_pointer_cast<AbstractType>(
+							std::make_shared<SizeIntegerType>()
+						)
+					);
+				}
+			}
+			return this->visitChildren(ctx);
+		}
 		auto visitCollection_type(AtemParser::Collection_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitNever_type(AtemParser::Never_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitTuple_type(AtemParser::Tuple_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }

@@ -43,7 +43,7 @@
 		"module/semantic/types/visitor/atemc.semantic.types.visitor.ixx"
 		"module/semantic/types/atemc.semantic.types.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.ixx" 
-		"module/semantic/types/concrete/atemc.semantic.types.concrete.integertype.ixx" 
+		 
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.booleantype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.floatingpointtype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.unittype.ixx"
@@ -91,7 +91,13 @@
 		"module/grammar/atemc.grammar.listener.ixx"
 		"module/grammar/atemc.grammar.basevisitor.ixx"
 		"module/grammar/atemc.grammar.visitor.ixx"
- "module/exception/atemc.exception.exceptionhandler.ixx" "module/ast/types/atemc.ast.types.aggregateinitializationexprast.ixx" "module/ast/types/atemc.ast.types.typeexprast.ixx")
+		"module/exception/atemc.exception.exceptionhandler.ixx" 
+		"module/ast/types/atemc.ast.types.aggregateinitializationexprast.ixx" 
+		"module/ast/types/atemc.ast.types.typeexprast.ixx" 
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.signedintegertype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.unsignedintegertype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.sizeintegertype.ixx"
+)
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 

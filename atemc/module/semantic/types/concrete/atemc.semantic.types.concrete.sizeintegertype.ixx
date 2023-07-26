@@ -1,20 +1,22 @@
-export module atemc.semantic.types.concrete.integertype;
+export module atemc.semantic.types.concrete.sizeintegertype;
+
+import <string>;
 
 import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
 {
-	class IntegerType : public CompositeType
+	class SizeIntegerType : public CompositeType
 	{
 	public:
-		IntegerType()
+		explicit SizeIntegerType()
 		{
 			
 		}
 
 		auto operator==(const AbstractType& that) const -> bool override
 		{
-			if(auto that_ptr = dynamic_cast<const IntegerType*>(&that))
+			if(auto that_ptr = dynamic_cast<const SizeIntegerType*>(&that))
 			{
 				return true;
 			}
@@ -28,6 +30,11 @@ export namespace atemc
 		auto accept(TypeVisitor* visitor) -> void override
 		{
 			
+		}
+
+		auto getMangledTypeString() const -> ::std::string override
+		{
+			return std::string{"USize"};
 		}
 	};
 }

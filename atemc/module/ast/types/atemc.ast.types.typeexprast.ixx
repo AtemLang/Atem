@@ -13,6 +13,11 @@ export namespace atemc
 	{		
 		std::shared_ptr<AbstractType> type_ptr_;
 	public:
+		explicit TypeExprAST(std::shared_ptr<AbstractType> type_ptr) : type_ptr_(type_ptr)
+		{
+			
+		}
+
 		auto accept(ASTVisitor* visitor) -> void override {}
 
 		virtual auto getType() const -> std::shared_ptr<AbstractType> { return this->type_ptr_; }
