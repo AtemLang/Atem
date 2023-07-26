@@ -4,6 +4,7 @@ import <memory>;
 import <any>;
 import <map>;
 import <tuple>;
+import <ranges>;
 
 import <antlr4-runtime.h>;
 
@@ -420,6 +421,119 @@ export namespace atemc
 					)
 				);
 			}
+			if(auto ctx_ptr = ctx->byte_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<ByteType>()
+					)
+				);
+			}
+			if(auto ctx_ptr = ctx->character_type())
+			{
+				if(ctx_ptr->KeywordChar8())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF8)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordChar16())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF16)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordChar32())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF32)
+						)
+					);
+				}
+			}
+			if(auto ctx_ptr = ctx->comptime_type())
+			{
+				if(ctx_ptr->KeywordCompileTimeChar())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<ComptimeCharacterType>()
+						)
+					);
+				}
+				if(ctx_ptr->KeywordCompileTimeFloat())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<ComptimeFloatingPointType>()
+						)
+					);
+				}
+				if(ctx_ptr->KeywordCompileTimeInt())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<ComptimeIntegerType>()
+						)
+					);
+				}
+				if(ctx_ptr->KeywordCompileTimeString())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<ComptimeStringType>()
+						)
+					);
+				}
+			}
+			if(auto ctx_ptr = ctx->floating_point_type())
+			{
+				if(ctx_ptr->KeywordFloat16())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_16)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordFloat32())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_32)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordFloat64())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_64)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordFloat80())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_80)
+						)
+					);
+				}
+				if(ctx_ptr->KeywordFloat128())
+				{
+					return std::make_shared<TypeExprAST>(
+							std::dynamic_pointer_cast<AbstractType>(
+								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_128)
+						)
+					);
+				}
+			}
 			if(auto ctx_ptr = ctx->integer_type())
 			{
 				auto width = [&]()
@@ -475,6 +589,38 @@ export namespace atemc
 						)
 					);
 				}
+			}
+			if(auto ctx_ptr = ctx->never_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<NeverType>()
+					)
+				);
+			}
+			if(auto ctx_ptr = ctx->string_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<StringType>()
+					)
+				);
+			}
+			if(auto ctx_ptr = ctx->type_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<TypeType>()
+					)
+				);
+			}
+			if(auto ctx_ptr = ctx->unit_type())
+			{
+				return std::make_shared<TypeExprAST>(
+					std::dynamic_pointer_cast<AbstractType>(
+						std::make_shared<UnitType>()
+					)
+				);
 			}
 			return this->visitChildren(ctx);
 		}

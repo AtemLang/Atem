@@ -97,7 +97,13 @@
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.signedintegertype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.unsignedintegertype.ixx"
 		"module/semantic/types/concrete/atemc.semantic.types.concrete.sizeintegertype.ixx"
-)
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.bytetype.ixx" 
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.charactertype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.comptimeintegertype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.comptimefloatingpointtype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.comptimestringtype.ixx"
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.nevertype.ixx"
+ "module/semantic/types/concrete/atemc.semantic.types.concrete.comptimecharactertype.ixx" "module/semantic/types/concrete/atemc.semantic.types.concrete.stringtype.ixx")
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 

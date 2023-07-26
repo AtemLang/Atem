@@ -1,4 +1,4 @@
-export module atemc.semantic.types.concrete.typetype;
+export module atemc.semantic.types.concrete.comptimecharactertype;
 
 import <string>;
 
@@ -6,17 +6,17 @@ import atemc.semantic.types.concrete.abstracttype;
 
 export namespace atemc
 {
-	class TypeType : public AbstractType
+	class ComptimeCharacterType : public AbstractType
 	{
 	public:
-		explicit TypeType()
+		explicit ComptimeCharacterType()
 		{
 			
 		}
 
 		auto operator==(const AbstractType& that) const -> bool override
 		{
-			if(auto that_ptr = dynamic_cast<const TypeType*>(&that))
+			if(auto that_ptr = dynamic_cast<const ComptimeCharacterType*>(&that))
 			{
 				return true;
 			}
@@ -34,7 +34,7 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> ::std::string override
 		{
-			return "Unit";
+			return "ComptimeChar";
 		}
 	};
 }
