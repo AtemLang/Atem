@@ -29,7 +29,7 @@ export namespace atemc
 
 		virtual auto accept(ASTVisitor* visitor) -> void = 0;
 
-		virtual auto getChildren() const -> std::vector<std::shared_ptr<AbstractAST>> { return {}; }
+		virtual auto getChildren() -> std::vector<std::shared_ptr<AbstractAST>> { return {}; }
 
 		virtual auto operator<=>(const AbstractAST& that) const -> std::strong_ordering
 		{

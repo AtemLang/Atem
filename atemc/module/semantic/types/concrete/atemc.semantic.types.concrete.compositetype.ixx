@@ -35,13 +35,11 @@ export namespace atemc
 	protected:
 		std::unordered_map<std::string, std::shared_ptr<TypeExprAST>> sub_type_map_;
 
+	public:
 		explicit CompositeType(const std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>& sub_type_map)
 			: sub_type_map_(sub_type_map)
 		{}
 		explicit CompositeType(std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>&& sub_type_map) noexcept
-			: sub_type_map_(std::move(sub_type_map))
-		{}
-		explicit CompositeType(std::unordered_map<std::string, std::shared_ptr<TypeExprAST>> sub_type_map)
 			: sub_type_map_(std::move(sub_type_map))
 		{}
 

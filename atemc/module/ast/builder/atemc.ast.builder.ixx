@@ -429,22 +429,19 @@ export namespace atemc
 			{
 				if(ctx_ptr->KeywordChar8())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF8)
 						);
 				}
 				if(ctx_ptr->KeywordChar16())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF16)
 						);
 				}
 				if(ctx_ptr->KeywordChar32())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<CharacterType>(CharacterType::CharacterWidthKind::CWK_UTF32)
 						);
 				}
@@ -465,15 +462,13 @@ export namespace atemc
 				}
 				if(ctx_ptr->KeywordCompileTimeInt())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<ComptimeIntegerType>()
 						);
 				}
 				if(ctx_ptr->KeywordCompileTimeString())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<ComptimeStringType>()
 						);
 				}
@@ -482,36 +477,31 @@ export namespace atemc
 			{
 				if(ctx_ptr->KeywordFloat16())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_16)
 						);
 				}
 				if(ctx_ptr->KeywordFloat32())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_32)
 						);
 				}
 				if(ctx_ptr->KeywordFloat64())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_64)
 						);
 				}
 				if(ctx_ptr->KeywordFloat80())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_80)
 						);
 				}
 				if(ctx_ptr->KeywordFloat128())
 				{
-					return 
-							std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 								std::make_shared<FloatingPointType>(FloatingPointType::FloatingPointWidthKind::FPWK_128)
 						);
 				}
@@ -545,8 +535,7 @@ export namespace atemc
 					}();
 				if(auto ptr = ctx_ptr->KeywordInt())
 				{
-					return 
-						std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 							std::make_shared<SignedIntegerType>(
 								width
 							)
@@ -554,8 +543,7 @@ export namespace atemc
 				}
 				if(auto ptr = ctx_ptr->KeywordUInt())
 				{
-					return 
-						std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 							std::make_shared<UnsignedIntegerType>(
 								width
 							)
@@ -563,37 +551,32 @@ export namespace atemc
 				}
 				if(auto ptr = ctx_ptr->KeywordUsize())
 				{
-					return 
-						std::dynamic_pointer_cast<TypeExprAST>(
+					return std::dynamic_pointer_cast<TypeExprAST>(
 							std::make_shared<SizeIntegerType>()
 						);
 				}
 			}
 			if(auto ctx_ptr = ctx->never_type())
 			{
-				return 
-					std::dynamic_pointer_cast<TypeExprAST>(
+				return std::dynamic_pointer_cast<TypeExprAST>(
 						std::make_shared<NeverType>()
 					);
 			}
 			if(auto ctx_ptr = ctx->string_type())
 			{
-				return 
-					std::dynamic_pointer_cast<TypeExprAST>(
+				return std::dynamic_pointer_cast<TypeExprAST>(
 						std::make_shared<StringType>()
 					);
 			}
 			if(auto ctx_ptr = ctx->type_type())
 			{
-				return 
-					std::dynamic_pointer_cast<TypeExprAST>(
+				return std::dynamic_pointer_cast<TypeExprAST>(
 						std::make_shared<TypeType>()
 					);
 			}
 			if(auto ctx_ptr = ctx->unit_type())
 			{
-				return 
-					std::dynamic_pointer_cast<TypeExprAST>(
+				return std::dynamic_pointer_cast<TypeExprAST>(
 						std::make_shared<UnitType>()
 					);
 			}
@@ -627,19 +610,46 @@ export namespace atemc
 		auto visitSome_type(AtemParser::Some_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitStatic_array_type(AtemParser::Static_array_typeContext *ctx) -> std::any override
 		{
-			return this->visitChildren(ctx);
+			return std::dynamic_pointer_cast<TypeExprAST>(
+				std::make_shared<StaticArrayType>(
+					std::any_cast<std::shared_ptr<TypeExprAST>(
+						this->visit(ctx->static_array_element_type()->type_expression())
+					)
+				)
+			);
 		}
 		auto visitDynamic_array_type(AtemParser::Dynamic_array_typeContext *ctx) -> std::any override
 		{
-			return this->visitChildren(ctx);
+			return std::dynamic_pointer_cast<TypeExprAST>(
+				std::make_shared<DynamicArrayType>(
+					std::any_cast<std::shared_ptr<TypeExprAST>>(
+						this->visit(ctx->dynamic_array_element_type()->type_expression())
+					)
+				)
+			);
 		}
 		auto visitMap_type(AtemParser::Map_typeContext *ctx) -> std::any override
 		{
-			return this->visitChildren(ctx);
+			return std::dynamic_pointer_cast<TypeExprAST>(
+				std::make_shared<MapType>(
+					std::any_cast<std::shared_ptr<TypeExprAST>>(
+						this->visit(ctx->map_key_type()->type_expression())
+					),
+					std::any_cast<std::shared_ptr<TypeExprAST>>(
+						this->visit(ctx->map_value_type()->type_expression())
+					)
+				)
+			);
 		}
 		auto visitSet_type(AtemParser::Set_typeContext *ctx) -> std::any override
 		{
-			return this->visitChildren(ctx);
+			return std::dynamic_pointer_cast<TypeExprAST>(
+				std::make_shared<SetType>(
+					std::any_cast<std::shared_ptr<TypeExprAST>>(
+						this->visit(ctx->set_element_type()->type_expression())
+					)
+				)
+			);
 		}
 		auto visitConst_type(AtemParser::Const_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitSimple_type(AtemParser::Simple_typeContext *ctx) -> std::any override { return this->visitChildren(ctx); }

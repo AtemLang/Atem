@@ -948,16 +948,31 @@ some_type
 	: KeywordSome type_expression;
 
 static_array_type
-    : LeftSquare expression (Comma expression)* Comma? RightSquare type_expression;
+    : LeftSquare expression (Comma expression)* Comma? RightSquare static_array_element_type;
+
+static_array_element_type
+	: type_expression;
 
 dynamic_array_type
-    : LeftSquare RightSquare type_expression;
+    : LeftSquare RightSquare dynamic_array_element_type;
+
+dynamic_array_element_type
+	: type_expression;
 
 map_type
-	: LeftSquare type_expression Colon type_expression RightSquare;
+	: LeftSquare map_key_type Colon map_value_type RightSquare;
+
+map_key_type
+	: type_expression;
+
+map_value_type
+	: type_expression;
 
 set_type
-	: LeftSquare type_expression RightSquare;
+	: LeftSquare set_element_type RightSquare;
+
+set_element_type
+	: type_expression;
 
 const_type
 	: KeywordConst type_expression;
