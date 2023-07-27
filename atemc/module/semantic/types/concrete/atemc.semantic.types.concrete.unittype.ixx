@@ -2,11 +2,11 @@ export module atemc.semantic.types.concrete.unittype;
 
 import <string>;
 
-import atemc.semantic.types.concrete.abstracttype;
+import atemc.semantic.types.concrete.typeexprast;
 
 export namespace atemc
 {
-	class UnitType : public AbstractType
+	class UnitType : public TypeExprAST
 	{
 	public:
 		explicit UnitType()
@@ -14,7 +14,7 @@ export namespace atemc
 			
 		}
 
-		auto operator==(const AbstractType& that) const -> bool override
+		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const UnitType*>(&that))
 			{
@@ -22,7 +22,7 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const AbstractType& that) const -> bool override
+		auto operator!=(const TypeExprAST& that) const -> bool override
 		{
 			return not this->operator==(that);
 		}

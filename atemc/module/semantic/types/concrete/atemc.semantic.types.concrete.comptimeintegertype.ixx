@@ -2,11 +2,11 @@ export module atemc.semantic.types.concrete.comptimeintegertype;
 
 import <string>;
 
-import atemc.semantic.types.concrete.abstracttype;
+import atemc.semantic.types.concrete.typeexprast;
 
 export namespace atemc
 {
-	class ComptimeIntegerType : public AbstractType
+	class ComptimeIntegerType : public TypeExprAST
 	{
 	public:
 		explicit ComptimeIntegerType()
@@ -14,7 +14,7 @@ export namespace atemc
 			
 		}
 
-		auto operator==(const AbstractType& that) const -> bool override
+		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const ComptimeIntegerType*>(&that))
 			{
@@ -22,7 +22,7 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const AbstractType& that) const -> bool override
+		auto operator!=(const TypeExprAST& that) const -> bool override
 		{
 			return not this->operator==(that);
 		}

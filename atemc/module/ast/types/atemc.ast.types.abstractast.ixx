@@ -17,10 +17,10 @@ export namespace atemc
 	public:
 		AbstractAST() = default;
 		AbstractAST(const AbstractAST& that) = default;
-		AbstractAST(AbstractAST&& that) = default;
+		AbstractAST(AbstractAST&& that) noexcept = default;
 
 		auto operator=(const AbstractAST& that) -> AbstractAST& = default;
-		auto operator=(AbstractAST&& that) -> AbstractAST& = default;
+		auto operator=(AbstractAST&& that) noexcept -> AbstractAST& = default;
 
 		virtual ~AbstractAST() = default;
 

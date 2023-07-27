@@ -26,7 +26,7 @@ export namespace atemc
 			: floating_point_width_kind_(floating_point_width_kind)
 		{}
 
-		auto operator==(const AbstractType& that) const -> bool override
+		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const FloatingPointType*>(&that))
 			{
@@ -34,7 +34,7 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const AbstractType& that) const -> bool override
+		auto operator!=(const TypeExprAST& that) const -> bool override
 		{
 			return not this->operator==(that);
 		}

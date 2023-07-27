@@ -1,6 +1,5 @@
 export module atemc.semantic.types.concrete;
 
-export import atemc.semantic.types.concrete.abstracttype;
 export import atemc.semantic.types.concrete.booleantype;
 export import atemc.semantic.types.concrete.bytetype;
 export import atemc.semantic.types.concrete.charactertype;
@@ -9,13 +8,18 @@ export import atemc.semantic.types.concrete.comptimecharactertype;
 export import atemc.semantic.types.concrete.comptimefloatingpointtype;
 export import atemc.semantic.types.concrete.comptimeintegertype;
 export import atemc.semantic.types.concrete.comptimestringtype;
+export import atemc.semantic.types.concrete.dynamicarraytype;
 export import atemc.semantic.types.concrete.floatingpointtype;
 export import atemc.semantic.types.concrete.functiontype;
+export import atemc.semantic.types.concrete.maptype;
 export import atemc.semantic.types.concrete.nevertype;
 export import atemc.semantic.types.concrete.pointertype;
+export import atemc.semantic.types.concrete.settype;
 export import atemc.semantic.types.concrete.signedintegertype;
 export import atemc.semantic.types.concrete.sizeintegertype;
+export import atemc.semantic.types.concrete.staticarraytype;
 export import atemc.semantic.types.concrete.stringtype;
+export import atemc.semantic.types.concrete.typeexprast;
 export import atemc.semantic.types.concrete.typetype;
 export import atemc.semantic.types.concrete.unittype;
 export import atemc.semantic.types.concrete.unsignedintegertype;

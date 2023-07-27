@@ -27,7 +27,7 @@ export namespace atemc
 		auto getCharacterWidthKind() const noexcept -> CharacterWidthKind { return this->character_width_kind_; }
 		auto setCharacterWidthKind(CharacterWidthKind character_width_kind) noexcept -> void { this->character_width_kind_ = character_width_kind; }
 
-		auto operator==(const AbstractType& that) const -> bool override
+		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const CharacterType*>(&that); this->character_width_kind_ == that_ptr->character_width_kind_)
 			{
@@ -35,7 +35,7 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const AbstractType& that) const -> bool override
+		auto operator!=(const TypeExprAST& that) const -> bool override
 		{
 			return not this->operator==(that);
 		}

@@ -17,7 +17,7 @@ export namespace atemc
 			
 		}
 
-		auto operator==(const AbstractType& that) const -> bool override
+		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const SignedIntegerType*>(&that); this->integer_type_width_ == that_ptr->integer_type_width_)
 			{
@@ -25,7 +25,7 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const AbstractType& that) const -> bool override
+		auto operator!=(const TypeExprAST& that) const -> bool override
 		{
 			return not this->operator==(that);
 		}

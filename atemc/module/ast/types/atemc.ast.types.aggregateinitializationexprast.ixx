@@ -2,16 +2,18 @@ export module atemc.ast.types.aggregateinitializationexprast;
 
 import <map>;
 import <print>;
+import <memory>;
 
 export import atemc.ast.types.exprast;
-export import atemc.ast.types.typeexprast;
 
 export namespace atemc 
 {
+	class TypeExprAST;
+
 	class AggregateInitializationExprAST : public ExprAST 
 	{
 	public:
-		AggregateInitializationExprAST(const TypeExprAST& type_expr_ast, const std::map<ExprAST, ExprAST>& members)
+		AggregateInitializationExprAST(std::shared_ptr<TypeExprAST> type_expr_ast, const std::map<ExprAST, ExprAST>& members)
 		{
 			
 		}
