@@ -1,6 +1,6 @@
 export module atemc.ast.types.declarationexprast;
 
-import atemc.ast.types.exprast;
+export import atemc.ast.types.exprast;
 
 export namespace atemc
 {

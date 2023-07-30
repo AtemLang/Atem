@@ -23,6 +23,7 @@ export import atemc.ast.types.moduledeclarationexprast;
 export import atemc.ast.types.namespacedeclarationexprast;
 export import atemc.ast.types.nullliteralexprast;
 export import atemc.ast.types.packagedeclarationexprast;
+export import atemc.ast.types.pathexprast;
 export import atemc.ast.types.projectdeclarationexprast;
 export import atemc.ast.types.protocoldeclarationexprast;
 export import atemc.ast.types.repeatwhileexprast;

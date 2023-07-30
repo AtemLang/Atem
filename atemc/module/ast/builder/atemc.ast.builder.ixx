@@ -33,8 +33,11 @@ export namespace atemc
 			{
 				if(auto project_ctx = stmt->declaration_statement()->declaration_expression()->project_declaration())
 				{
-					auto project_ast_ptr = std::any_cast<std::shared_ptr<ProjectDeclarationExprAST>>
-						(this->visitProject_declaration(project_ctx));
+					auto project_ast_ptr = std::dynamic_pointer_cast<ProjectDeclarationExprAST>(
+						std::any_cast<std::shared_ptr<ExprAST>>(
+							this->visitProject_declaration(project_ctx)
+						)
+					);
 					return project_ast_ptr;
 				}
 			}
@@ -175,7 +178,11 @@ export namespace atemc
 			auto aggr_init_ctx = ctx->aggregate_initialization_expression();
 			auto aggr_init_ast_ptr = std::any_cast<std::shared_ptr<AggregateInitializationExprAST>>
 				(this->visitAggregate_initialization_expression(aggr_init_ctx));
-			return std::make_shared<ProjectDeclarationExprAST>(aggr_init_ast_ptr);
+			return std::dynamic_pointer_cast<ExprAST>(
+				std::make_shared<ProjectDeclarationExprAST>(
+					aggr_init_ast_ptr
+				)
+			);
 		}
 		auto visitPackage_declaration(AtemParser::Package_declarationContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitPackage_member_list(AtemParser::Package_member_listContext *ctx) -> std::any override { return this->visitChildren(ctx); }
@@ -204,8 +211,26 @@ export namespace atemc
 		auto visitFunction_parameter_name(AtemParser::Function_parameter_nameContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitDefault_argument_clause(AtemParser::Default_argument_clauseContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitType_annotation(AtemParser::Type_annotationContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitVariable_declaration(AtemParser::Variable_declarationContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitConstant_declaration(AtemParser::Constant_declarationContext *ctx) -> std::any override { return this->visitChildren(ctx); }
+		auto visitVariable_declaration(AtemParser::Variable_declarationContext *ctx) -> std::any override
+		{
+			return std::dynamic_pointer_cast<ExprAST>(
+				std::make_shared<VariableDeclarationExprAST>(
+					std::any_cast<std::shared_ptr<ExprAST>>(
+						this->visit(ctx->expression())
+					)
+				)
+			);
+		}
+		auto visitConstant_declaration(AtemParser::Constant_declarationContext *ctx) -> std::any override
+		{
+			return std::dynamic_pointer_cast<ExprAST>(
+				std::make_shared<ConstantDeclarationExprAST>(
+					std::any_cast<std::shared_ptr<ExprAST>>(
+						this->visit(ctx->expression())
+					)
+				)
+			);
+		}
 		auto visitStorage_level_specifier(AtemParser::Storage_level_specifierContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitClosure_expression(AtemParser::Closure_expressionContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitCapture_list(AtemParser::Capture_listContext *ctx) -> std::any override { return this->visitChildren(ctx); }
@@ -266,13 +291,19 @@ export namespace atemc
 		auto visitAggregate_initialization_expression_(AtemParser::Aggregate_initialization_expression_Context* ctx)
 			-> std::any override
 		{
-			auto type = std::any_cast<std::shared_ptr<TypeExprAST>>(this->visit(ctx->type_expression()));
-			return std::make_shared<AggregateInitializationExprAST>(
+			auto type = std::any_cast<std::shared_ptr<TypeExprAST>>(
+				this->visit(
+					ctx->type_expression()
+				)
+			);
+			return std::dynamic_pointer_cast<ExprAST>(
+				std::make_shared<AggregateInitializationExprAST>(
 					type,
 					std::any_cast<std::map<ExprAST, ExprAST>>(
 						this->visitAggregate_initialization_list(ctx->aggregate_initialization_expression()->aggregate_initialization_list())
 					)
-				);
+				)
+			);
 		}
 		auto visitCatch_expression_(AtemParser::Catch_expression_Context *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitThrow_expression_(AtemParser::Throw_expression_Context *ctx) -> std::any override { return this->visitChildren(ctx); }
@@ -612,9 +643,10 @@ export namespace atemc
 		{
 			return std::dynamic_pointer_cast<TypeExprAST>(
 				std::make_shared<StaticArrayType>(
-					std::any_cast<std::shared_ptr<TypeExprAST>(
+					std::any_cast<std::shared_ptr<TypeExprAST>>(
 						this->visit(ctx->static_array_element_type()->type_expression())
-					)
+					),
+					0
 				)
 			);
 		}
@@ -677,7 +709,21 @@ export namespace atemc
 		auto visitDefault_literal(AtemParser::Default_literalContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitArray_literal(AtemParser::Array_literalContext *ctx) -> std::any override
 		{
-			return this->visitChildren(ctx);
+			return std::dynamic_pointer_cast<ExprAST>(
+				std::make_shared<ArrayLiteralExprAST>(
+					std::ranges::to<std::vector>(
+						std::views::transform(
+							ctx->expression(),
+							[&](AtemParser::ExpressionContext* ptr)
+							{
+								return std::any_cast<std::shared_ptr<ExprAST>>(
+									this->visit(ctx)
+								);
+							}
+						)
+					)
+				)
+			);
 		}
 		auto visitString_literal(AtemParser::String_literalContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitExtended_string_literal(AtemParser::Extended_string_literalContext *ctx) -> std::any override { return this->visitChildren(ctx); }

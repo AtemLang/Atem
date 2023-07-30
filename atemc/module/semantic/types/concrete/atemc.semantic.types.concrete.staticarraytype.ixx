@@ -8,10 +8,13 @@ import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
 {
-	class DynamicArrayType : public CompositeType
+	class StaticArrayType : public CompositeType
 	{
+		size_t length_;
+
 	public:
-		explicit DynamicArrayType(std::shared_ptr<TypeExprAST> element_type)
+		StaticArrayType(std::shared_ptr<TypeExprAST> element_type, size_t length)
+			: length_(length)
 		{
 			this->sub_type_map_.at("element_type") = element_type;
 		}
@@ -19,10 +22,13 @@ export namespace atemc
 		auto getElementType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at("element_type"); }
 		auto setElementType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at("element_type") = value; }
 
+		auto getLength() const noexcept -> size_t { return this->length_; }
+		auto setLength(size_t value) noexcept -> void { this->length_ = value; }
+
 		auto operator==(const TypeExprAST& that) const -> bool override
 		{
-			if(auto that_ptr = dynamic_cast<const DynamicArrayType*>(&that); 
-				this->sub_type_map_.at("element_type") == that_ptr->sub_type_map_.at("element_type"))
+			if(auto that_ptr = dynamic_cast<const StaticArrayType*>(&that); 
+				this->length_ == that_ptr->length_ and this->sub_type_map_.at("element_type") == that_ptr-> sub_type_map_.at("element_type"))
 			{
 				return true;
 			}
@@ -36,7 +42,11 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> std::string override
 		{
-			return std::format("[]{}", this->sub_type_map_.at("element_type")->getMangledTypeString());
+			return std::string{[&]
+			{
+				if(this->length_ > 0) return std::format("[{}]", this->length_);
+				else return std::string{"[_]"};
+			}()}.append(this->sub_type_map_.at("element_type")->getMangledTypeString());
 		}
 	};
 }
