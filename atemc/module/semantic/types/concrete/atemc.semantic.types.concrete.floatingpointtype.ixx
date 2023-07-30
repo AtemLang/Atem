@@ -2,6 +2,7 @@ export module atemc.semantic.types.concrete.floatingpointtype;
 
 import <string>;
 
+import <fmt/compile.h>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
@@ -11,7 +12,7 @@ export namespace atemc
 	class FloatingPointType : public CompositeType
 	{
 	public:
-		enum class FloatingPointWidthKind
+		enum class FloatingPointWidthKind : int
 		{
 			FPWK_16 = 16,
 			FPWK_32 = 32,
@@ -36,10 +37,6 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const TypeExprAST& that) const -> bool override
-		{
-			return not this->operator==(that);
-		}
 
 		auto accept(TypeVisitor* visitor) -> void override
 		{
@@ -48,7 +45,7 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> ::std::u32string override
 		{
-			return fmt::format(U"Float{}", std::to_underlying(this->floating_point_width_kind_));
+			return fmt::format(FMT_COMPILE(U"Float{}"), std::to_underlying(this->floating_point_width_kind_));
 		}
 	};
 }

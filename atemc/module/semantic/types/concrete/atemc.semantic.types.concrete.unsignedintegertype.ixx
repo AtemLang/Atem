@@ -2,6 +2,7 @@ export module atemc.semantic.types.concrete.unsignedintegertype;
 
 import <string>;
 
+import <fmt/compile.h>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
@@ -42,7 +43,7 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> ::std::u32string override
 		{
-			return fmt::format(U"UInt{}", this->integer_type_width_);
+			return fmt::format(FMT_COMPILE(U"UInt{}"), this->integer_type_width_);
 		}
 	};
 }

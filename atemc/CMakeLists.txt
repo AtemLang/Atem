@@ -165,7 +165,7 @@ target_link_libraries(
 		Microsoft.GSL::GSL
 		nameof::nameof
 		stxxl
-		fmt::fmt
+		fmt::fmt-header-only
         ${llvm_libs}
 )
 
@@ -174,5 +174,5 @@ target_include_directories(atemc PRIVATE "/")
 target_include_directories(atemc PRIVATE "${_VCPKG_INSTALLED_DIR}/x64-windows/include/antlr4-runtime")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
-	set_property(TARGET atemc PROPERTY CXX_STANDARD 23)
+	set_property(TARGET atemc PROPERTY CXX_STANDARD 26)
 endif()

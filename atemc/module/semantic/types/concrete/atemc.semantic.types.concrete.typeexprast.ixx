@@ -13,7 +13,10 @@ export namespace atemc
 	{
 	public:
 		virtual auto operator==(const TypeExprAST& that) const -> bool = 0;
-		virtual auto operator!=(const TypeExprAST& that) const -> bool = 0;
+		virtual auto operator!=(const TypeExprAST& that) const -> bool
+		{
+			return not this->operator==(that);
+		}
 
 		virtual auto accept(TypeVisitor* visitor) -> void = 0;
 

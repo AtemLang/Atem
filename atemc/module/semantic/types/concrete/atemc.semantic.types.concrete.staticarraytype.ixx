@@ -4,6 +4,7 @@ import <string>;
 import <format>;
 import <memory>;
 
+import <fmt/compile.h>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
@@ -46,7 +47,7 @@ export namespace atemc
 		{
 			return std::u32string{[&]
 			{
-				if(this->length_ > 0) return fmt::format(U"[{}]", this->length_);
+				if(this->length_ > 0) return fmt::format(FMT_COMPILE(U"[{}]"), this->length_);
 				else return std::u32string{U"[_]"};
 			}()}.append(this->sub_type_map_.at(U"element_type")->getMangledTypeString());
 		}

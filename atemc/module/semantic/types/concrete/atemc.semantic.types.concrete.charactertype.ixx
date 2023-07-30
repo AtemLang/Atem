@@ -2,6 +2,7 @@ export module atemc.semantic.types.concrete.charactertype;
 
 import <string>;
 
+import <fmt/compile.h>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
@@ -11,7 +12,7 @@ export namespace atemc
 	class CharacterType : public CompositeType
 	{
 	public:
-		enum class CharacterWidthKind 
+		enum class CharacterWidthKind : int
 		{
 			CWK_UTF8 = 8,
 			CWK_UTF16 = 16,
@@ -49,7 +50,7 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> std::u32string override
 		{
-			return fmt::format(U"Char", std::to_underlying(this->character_width_kind_));
+			return fmt::format(FMT_COMPILE(U"Char{}"), std::to_underlying(this->character_width_kind_));
 		}
 	};
 }

@@ -4,6 +4,7 @@ import <string>;
 import <format>;
 import <memory>;
 
+import <fmt/compile.h>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
@@ -38,7 +39,7 @@ export namespace atemc
 
 		auto getMangledTypeString() const -> std::u32string override
 		{
-			return fmt::format(U"[]{}", this->sub_type_map_.at(U"element_type")->getMangledTypeString());
+			return fmt::format(FMT_COMPILE(U"[]{}"), this->sub_type_map_.at(U"element_type")->getMangledTypeString());
 		}
 	};
 }
