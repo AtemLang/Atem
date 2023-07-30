@@ -19,7 +19,7 @@ export namespace atemc
 			this->sub_type_map_.at(U"element_type") = element_type;
 		}
 
-		auto getElementType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at(U"element_type"); }
+		auto getElementType() const noexcept -> std::weak_ptr<TypeExprAST> { return this->sub_type_map_.at(U"element_type"); }
 		auto setElementType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at(U"element_type") = value; }
 
 		auto operator==(const TypeExprAST& that) const -> bool override

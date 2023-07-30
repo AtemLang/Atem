@@ -33,9 +33,9 @@ export namespace atemc
 
 		auto getArrayLiteralLength() const noexcept -> size_t { return this->array_literal_expr_list_.size(); }
 
-		auto getChildren() -> std::vector<std::shared_ptr<AbstractAST>> override
+		auto getChildren() -> std::vector<std::weak_ptr<AbstractAST>> override
 		{
-			return std::ranges::to<std::vector>(
+			return std::ranges::to<std::vector<std::weak_ptr<AbstractAST>>>(
 				std::views::transform(this->array_literal_expr_list_, 
 					[](std::shared_ptr<ExprAST> ptr)
 					{

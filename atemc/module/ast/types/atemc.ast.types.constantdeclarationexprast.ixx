@@ -19,7 +19,7 @@ export namespace atemc
 			
 		}
 
-		auto getInitializerExpression() const noexcept -> std::shared_ptr<ExprAST> { return this->initializer_expr_; }
+		auto getInitializerExpression() const noexcept -> std::weak_ptr<ExprAST> { return this->initializer_expr_; }
 		auto setInitializerExpression(std::shared_ptr<ExprAST> initializer_expr) noexcept -> void { this->initializer_expr_ = initializer_expr;}
 	};
 }

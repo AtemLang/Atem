@@ -18,5 +18,8 @@ export namespace atemc
 		{
 			
 		}
+
+		virtual auto getExprType() const noexcept -> std::weak_ptr<TypeExprAST> { return this->expr_type_; }
+		virtual auto setExprType(std::shared_ptr<TypeExprAST> expr_type) noexcept -> void { this->expr_type_ = expr_type; }
 	};
 }

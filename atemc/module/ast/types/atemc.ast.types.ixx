@@ -8,6 +8,7 @@ export import atemc.ast.types.booleanliteralexprast;
 export import atemc.ast.types.characterliteralexprast;
 export import atemc.ast.types.classdeclarationexprast;
 export import atemc.ast.types.constantdeclarationexprast;
+export import atemc.ast.types.contractexprast;
 export import atemc.ast.types.declarationexprast;
 export import atemc.ast.types.declstmtast;
 export import atemc.ast.types.enumerationdeclarationexprast;

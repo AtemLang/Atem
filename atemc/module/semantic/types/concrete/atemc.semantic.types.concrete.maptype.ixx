@@ -20,10 +20,10 @@ export namespace atemc
 			this->sub_type_map_.at(U"value_type") = value_type;
 		}
 
-		auto getKeyType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at(U"key_type"); }
+		auto getKeyType() const noexcept -> std::weak_ptr<TypeExprAST> { return this->sub_type_map_.at(U"key_type"); }
 		auto setKeyType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at(U"key_type") = value; }
 
-		auto getValueType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at(U"value_type"); }
+		auto getValueType() const noexcept -> std::weak_ptr<TypeExprAST> { return this->sub_type_map_.at(U"value_type"); }
 		auto setValueType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at(U"value_type") = value; }
 
 		auto operator==(const TypeExprAST& that) const -> bool override

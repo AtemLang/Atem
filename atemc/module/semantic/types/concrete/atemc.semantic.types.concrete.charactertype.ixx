@@ -38,10 +38,6 @@ export namespace atemc
 			}
 			return false;
 		}
-		auto operator!=(const TypeExprAST& that) const -> bool override
-		{
-			return not this->operator==(that);
-		}
 
 		auto accept(TypeVisitor* visitor) -> void override
 		{
