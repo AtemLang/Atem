@@ -2,6 +2,8 @@ export module atemc.semantic.types.concrete.floatingpointtype;
 
 import <string>;
 
+import <fmt/xchar.h>;
+
 import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
@@ -44,9 +46,9 @@ export namespace atemc
 			
 		}
 
-		auto getMangledTypeString() const -> ::std::string override
+		auto getMangledTypeString() const -> ::std::u32string override
 		{
-			return std::string{"Float"}.append(std::to_string(std::to_underlying(this->floating_point_width_kind_)));
+			return fmt::format(U"Float{}", std::to_underlying(this->floating_point_width_kind_));
 		}
 	};
 }

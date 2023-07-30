@@ -6,6 +6,8 @@ import <map>;
 import <tuple>;
 import <ranges>;
 
+import <matchit.h>;
+
 import <antlr4-runtime.h>;
 
 import atemc.ast.types;
@@ -18,6 +20,7 @@ import atemc.semantic.types;
 export namespace atemc
 {
 	using namespace antlrcpp;
+	using namespace matchit;
 
 	class ASTBuilder : public AtemParserBaseVisitor
 	{
@@ -48,12 +51,95 @@ export namespace atemc
 		auto visitStatements(AtemParser::StatementsContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitDeclaration_statement_or_list(AtemParser::Declaration_statement_or_listContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitDeclaration_statement_list(AtemParser::Declaration_statement_listContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitDeclaration_statement(AtemParser::Declaration_statementContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitDeclarator(AtemParser::DeclaratorContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitDeclare_operator(AtemParser::Declare_operatorContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitEmpty_declare_operator(AtemParser::Empty_declare_operatorContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitDeclarator_name(AtemParser::Declarator_nameContext *ctx) -> std::any override { return this->visitChildren(ctx); }
-		auto visitDeclaration_expression(AtemParser::Declaration_expressionContext *ctx) -> std::any override { return this->visitChildren(ctx); }
+		auto visitDeclaration_statement(AtemParser::Declaration_statementContext *ctx) -> std::any override
+		{
+			auto init_expr = std::dynamic_pointer_cast<DeclarationExprAST>(
+				std::any_cast<std::shared_ptr<ExprAST>>(
+					this->visit(
+						ctx->declaration_expression()
+					)
+				)
+			);
+			auto type = std::dynamic_pointer_cast<TypeExprAST>(
+				std::make_shared<WildcardType>()
+			);
+			if(auto ctx_ptr = ctx->declarator()->declare_operator()->type_expression())
+			{
+				type = std::any_cast<std::shared_ptr<TypeExprAST>>(this->visit(ctx_ptr));
+			}
+			auto path_expr = std::dynamic_pointer_cast<PathExprAST>(
+				std::any_cast<std::shared_ptr<ExprAST>>(
+					this->visitPath_expression(ctx->declarator()->declarator_name()->path_expression())
+				)
+			);
+			return std::dynamic_pointer_cast<StmtAST>(
+				std::make_shared<DeclStmtAST>(
+					init_expr,
+					type,
+					path_expr
+				)
+			);
+		}
+		auto visitDeclaration_expression(AtemParser::Declaration_expressionContext *ctx) -> std::any override
+		{
+			if(auto ctx_ptr = ctx->package_declaration())
+			{
+				return this->visitPackage_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->module_declaration())
+			{
+				return this->visitModule_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->project_declaration())
+			{
+				return this->visitProject_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->namespace_declaration())
+			{
+				return this->visitNamespace_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->function_declaration())
+			{
+				return this->visitFunction_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->test_declaration())
+			{
+				return this->visitTest_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->variable_declaration())
+			{
+				return this->visitVariable_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->constant_declaration())
+			{
+				return this->visitConstant_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->class_declaration())
+			{
+				return this->visitClass_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->struct_declaration())
+			{
+				return this->visitStruct_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->enum_declaration())
+			{
+				return this->visitEnum_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->protocol_declaration())
+			{
+				return this->visitProtocol_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->extension_declaration())
+			{
+				return this->visitExtension_declaration(ctx_ptr);
+			}
+			if(auto ctx_ptr = ctx->union_declaration())
+			{
+				return this->visitUnion_declaration(ctx_ptr);
+			}
+			return this->visitChildren(ctx);
+		}
 		auto visitTest_declaration(AtemParser::Test_declarationContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitTest_name(AtemParser::Test_nameContext *ctx) -> std::any override { return this->visitChildren(ctx); }
 		auto visitStruct_declaration(AtemParser::Struct_declarationContext *ctx) -> std::any override { return this->visitChildren(ctx); }

@@ -23,3 +23,4 @@ export import atemc.semantic.types.concrete.typeexprast;
 export import atemc.semantic.types.concrete.typetype;
 export import atemc.semantic.types.concrete.unittype;
 export import atemc.semantic.types.concrete.unsignedintegertype;
+export import atemc.semantic.types.concrete.wildcardtype;

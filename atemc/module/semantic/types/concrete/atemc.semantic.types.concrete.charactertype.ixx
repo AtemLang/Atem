@@ -2,6 +2,8 @@ export module atemc.semantic.types.concrete.charactertype;
 
 import <string>;
 
+import <fmt/xchar.h>;
+
 import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
@@ -45,9 +47,9 @@ export namespace atemc
 			
 		}
 
-		auto getMangledTypeString() const -> std::string override
+		auto getMangledTypeString() const -> std::u32string override
 		{
-			return std::string{"Char"}.append(std::to_string(std::to_underlying(this->character_width_kind_)));
+			return fmt::format(U"Char", std::to_underlying(this->character_width_kind_));
 		}
 	};
 }

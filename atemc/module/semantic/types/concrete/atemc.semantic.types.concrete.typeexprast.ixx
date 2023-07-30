@@ -19,6 +19,6 @@ export namespace atemc
 
 		auto accept(ASTVisitor* visitor) -> void override { return ; }
 
-		virtual auto getMangledTypeString() const -> std::string = 0;
+		virtual auto getMangledTypeString() const -> std::u32string = 0;
 	};
 }

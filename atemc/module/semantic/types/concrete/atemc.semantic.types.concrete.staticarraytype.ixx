@@ -4,6 +4,8 @@ import <string>;
 import <format>;
 import <memory>;
 
+import <fmt/xchar.h>;
+
 import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
@@ -16,11 +18,11 @@ export namespace atemc
 		StaticArrayType(std::shared_ptr<TypeExprAST> element_type, size_t length)
 			: length_(length)
 		{
-			this->sub_type_map_.at("element_type") = element_type;
+			this->sub_type_map_.at(U"element_type") = element_type;
 		}
 
-		auto getElementType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at("element_type"); }
-		auto setElementType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at("element_type") = value; }
+		auto getElementType() const noexcept -> std::shared_ptr<TypeExprAST> { return this->sub_type_map_.at(U"element_type"); }
+		auto setElementType(std::shared_ptr<TypeExprAST> value) noexcept -> void { this->sub_type_map_.at(U"element_type") = value; }
 
 		auto getLength() const noexcept -> size_t { return this->length_; }
 		auto setLength(size_t value) noexcept -> void { this->length_ = value; }
@@ -28,7 +30,7 @@ export namespace atemc
 		auto operator==(const TypeExprAST& that) const -> bool override
 		{
 			if(auto that_ptr = dynamic_cast<const StaticArrayType*>(&that); 
-				this->length_ == that_ptr->length_ and this->sub_type_map_.at("element_type") == that_ptr-> sub_type_map_.at("element_type"))
+				this->length_ == that_ptr->length_ and this->sub_type_map_.at(U"element_type") == that_ptr-> sub_type_map_.at(U"element_type"))
 			{
 				return true;
 			}
@@ -40,13 +42,13 @@ export namespace atemc
 			
 		}
 
-		auto getMangledTypeString() const -> std::string override
+		auto getMangledTypeString() const -> std::u32string override
 		{
-			return std::string{[&]
+			return std::u32string{[&]
 			{
-				if(this->length_ > 0) return std::format("[{}]", this->length_);
-				else return std::string{"[_]"};
-			}()}.append(this->sub_type_map_.at("element_type")->getMangledTypeString());
+				if(this->length_ > 0) return fmt::format(U"[{}]", this->length_);
+				else return std::u32string{U"[_]"};
+			}()}.append(this->sub_type_map_.at(U"element_type")->getMangledTypeString());
 		}
 	};
 }

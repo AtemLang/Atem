@@ -107,7 +107,11 @@
 		"module/grammar/atemc.grammar.basevisitor.ixx"
 		"module/grammar/atemc.grammar.visitor.ixx"
 		"module/exception/atemc.exception.exceptionhandler.ixx" 
- "module/semantic/types/concrete/atemc.semantic.types.concrete.wildcardtype.ixx" "module/semantic/symboltable/atemc.semantic.symboltable.ixx" "module/semantic/cfa/atemc.semantic.cfa.ixx" "module/ast/types/atemc.ast.types.pathexprast.ixx")
+		"module/semantic/types/concrete/atemc.semantic.types.concrete.wildcardtype.ixx" 
+		"module/semantic/symboltable/atemc.semantic.symboltable.ixx" 
+		"module/semantic/cfa/atemc.semantic.cfa.ixx" 
+		"module/ast/types/atemc.ast.types.pathexprast.ixx"
+)
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 
@@ -120,6 +124,7 @@ find_package(unifex CONFIG REQUIRED)
 find_package(Microsoft.GSL CONFIG REQUIRED)
 find_package(nameof CONFIG REQUIRED)
 find_package(stxxl CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
 
 find_package(LLVM CONFIG REQUIRED)
 
@@ -160,6 +165,7 @@ target_link_libraries(
 		Microsoft.GSL::GSL
 		nameof::nameof
 		stxxl
+		fmt::fmt
         ${llvm_libs}
 )
 

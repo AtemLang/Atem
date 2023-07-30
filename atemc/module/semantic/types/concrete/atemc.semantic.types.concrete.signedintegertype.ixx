@@ -2,6 +2,8 @@ export module atemc.semantic.types.concrete.signedintegertype;
 
 import <string>;
 
+import <fmt/xchar.h>;
+
 import atemc.semantic.types.concrete.compositetype;
 
 export namespace atemc
@@ -38,9 +40,9 @@ export namespace atemc
 		auto getIntegerTypeWidth() const noexcept -> unsigned long long { return this->integer_type_width_; }
 		auto setIntegerTypeWidth(unsigned long long new_value) noexcept -> void { this->integer_type_width_ = new_value; }
 
-		auto getMangledTypeString() const -> ::std::string override
+		auto getMangledTypeString() const -> ::std::u32string override
 		{
-			return std::string{"Int"}.append(std::to_string(this->integer_type_width_));
+			return fmt::format(U"Int{}", this->integer_type_width_);
 		}
 	};
 }

@@ -33,13 +33,14 @@ export namespace atemc
 		}
 
 	protected:
-		std::unordered_map<std::string, std::shared_ptr<TypeExprAST>> sub_type_map_;
+		std::unordered_map<std::u32string, std::shared_ptr<TypeExprAST>> sub_type_map_;
+		using SubTypeMapT = std::unordered_map<std::u32string, std::shared_ptr<TypeExprAST>>;
 
 	public:
-		explicit CompositeType(const std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>& sub_type_map)
+		explicit CompositeType(const SubTypeMapT& sub_type_map)
 			: sub_type_map_(sub_type_map)
 		{}
-		explicit CompositeType(std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>&& sub_type_map) noexcept
+		explicit CompositeType(SubTypeMapT&& sub_type_map) noexcept
 			: sub_type_map_(std::move(sub_type_map))
 		{}
 
@@ -54,11 +55,11 @@ export namespace atemc
 			return *this;
 		}
 
-		auto getSubTypeMap() const -> const std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>& { return this->sub_type_map_; }
-		auto setSubTypeMap(const std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>& value) -> void { this->sub_type_map_ = value; }
-		auto setSubTypeMap(std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>&& value) -> void { this->sub_type_map_ = std::move(value); }
-		auto setSubTypeMap(std::unordered_map<std::string, std::shared_ptr<TypeExprAST>> value) -> void { this->sub_type_map_ = std::move(value); }
-		auto subTypeMap() -> std::unordered_map<std::string, std::shared_ptr<TypeExprAST>>& { return this->sub_type_map_; }
+		auto getSubTypeMap() const -> const SubTypeMapT& { return this->sub_type_map_; }
+		auto setSubTypeMap(const SubTypeMapT& value) -> void { this->sub_type_map_ = value; }
+		auto setSubTypeMap(SubTypeMapT&& value) -> void { this->sub_type_map_ = std::move(value); }
+		auto setSubTypeMap(SubTypeMapT value) -> void { this->sub_type_map_ = std::move(value); }
+		auto subTypeMap() -> SubTypeMapT& { return this->sub_type_map_; }
 
 		auto getArity() const -> size_t { return this->sub_type_map_.size(); }
 	};

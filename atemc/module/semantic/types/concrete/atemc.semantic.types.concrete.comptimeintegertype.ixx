@@ -32,9 +32,9 @@ export namespace atemc
 			
 		}
 
-		auto getMangledTypeString() const -> ::std::string override
+		auto getMangledTypeString() const -> ::std::u32string override
 		{
-			return "ComptimeFloat";
+			return U"ComptimeInt";
 		}
 	};
 }
