@@ -111,7 +111,7 @@
 		"module/semantic/symboltable/atemc.semantic.symboltable.ixx" 
 		"module/semantic/cfa/atemc.semantic.cfa.ixx" 
 		"module/ast/types/atemc.ast.types.pathexprast.ixx"
- "module/ast/types/atemc.ast.types.contractexprast.ixx")
+ "module/ast/types/atemc.ast.types.contractexprast.ixx" )
 
 target_compile_options(atemc PRIVATE /EHsc /experimental:module)
 

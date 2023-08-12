@@ -9,6 +9,7 @@ import <ranges>;
 import <fmt/xchar.h>;
 
 import atemc.semantic.types.concrete.compositetype;
+import atemc.ast.types.contractexprast;
 
 export namespace atemc
 {
@@ -90,7 +91,8 @@ export namespace atemc
 	public:
 		explicit FunctionType(
 				std::shared_ptr<FunctionParameterClauseType> function_parameter_clause,
-				std::shared_ptr<TypeExprAST> function_return_type
+				std::shared_ptr<TypeExprAST> function_return_type,
+				std::vector<ContractExprAST> function_contracts
 			)
 		{
 			this->sub_type_map_.at(U"function_parameters") = std::dynamic_pointer_cast<TypeExprAST>(function_parameter_clause);

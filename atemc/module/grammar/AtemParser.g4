@@ -387,7 +387,9 @@ function_declaration
 	: KeywordFunc attributes? function_type? function_body;
 
 function_body
-	: code_block | expression;
+	: code_block 
+	| expression
+	;
 
 contract_list
 	: KeywordRequire LeftCurly contract+ RightCurly | KeywordRequire contract;
@@ -410,7 +412,11 @@ function_name
 	: Identifier;
 
 function_type
-	: function_parameter_clause function_result function_specifiers? contract_list?;
+	: function_parameter_and_return_type function_specifiers? contract_list?;
+
+function_parameter_and_return_type
+	: function_parameter_clause? Arrow function_result_clause?
+	;
 
 function_specifier
 	: KeywordRecursive
@@ -421,10 +427,38 @@ function_specifier
 function_specifiers
 	: function_specifier+;
 
-function_result
-	: Arrow attributes? type_expression;
+function_result_clause
+	: function_simple_result_clause
+	| function_result_list_clause
+	;
+
+function_simple_result_clause
+	: attributes? type_expression;
+
+function_result_list_clause
+	: LeftParenthese function_return_list? RightParenthese;
+
+function_return_list
+	: function_return_value (Comma function_return_value)*;
+
+function_return_value
+	: attributes? function_return_value_name (Colon type_annotation)? default_return_value_clause?;
+
+function_return_value_name
+	: Identifier;
+
+default_return_value_clause
+	: Assign expression;
 
 function_parameter_clause
+	: function_simple_parameter_clause
+	| function_parameter_list_clause
+	;
+
+function_simple_parameter_clause
+	: function_parameter;
+
+function_parameter_list_clause
 	: LeftParenthese function_parameter_list? RightParenthese;
 
 function_parameter_list
