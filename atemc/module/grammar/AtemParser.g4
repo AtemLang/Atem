@@ -69,7 +69,7 @@ extension_declaration
 	: KeywordExtend path_expression KeywordWith attributes? extension_list? initializer_list? deinitializer_list? member_list enumerator_list?;
 
 udt_parameter_clause
-	: LeftParenthese function_parameter_list? RightParenthese;
+	: function_parameter_list;
 
 final_specifier
 	: KeywordFinal;
@@ -237,7 +237,7 @@ setter_declaration
 setter_type
 	: setter_parameter_clause? function_specifiers? contract_list?;
 setter_parameter_clause
-	: LeftParenthese setter_parameter RightParenthese;
+	: setter_parameter;
 setter_parameter
 	: setter_parameter_name (Colon type_annotation)?;
 setter_parameter_name
@@ -428,15 +428,7 @@ function_specifiers
 	: function_specifier+;
 
 function_result_clause
-	: function_simple_result_clause
-	| function_result_list_clause
-	;
-
-function_simple_result_clause
-	: attributes? type_expression;
-
-function_result_list_clause
-	: LeftParenthese function_return_list? RightParenthese;
+	: function_return_list;
 
 function_return_list
 	: function_return_value (Comma function_return_value)*;
@@ -451,15 +443,7 @@ default_return_value_clause
 	: Assign expression;
 
 function_parameter_clause
-	: function_simple_parameter_clause
-	| function_parameter_list_clause
-	;
-
-function_simple_parameter_clause
-	: function_parameter;
-
-function_parameter_list_clause
-	: LeftParenthese function_parameter_list? RightParenthese;
+	: function_parameter_list;
 
 function_parameter_list
 	: function_parameter (Comma function_parameter)*;
@@ -720,6 +704,10 @@ tuple_index_operator
 builtin_function_operator
 	: Builtin;
 
+packifying_operator
+	: LeftSquare Colon RightSquare
+	;
+
 builtin_function_name
 	: BuiltinCompileError
 	| BuiltinCompileInfo
@@ -806,6 +794,8 @@ expression
 	| KeywordAsm LeftParenthese string_literal RightParenthese							#assembly_expression_
 	| type_expression aggregate_initialization_expression								#aggregate_initialization_expression_
 	| capture_operator LeftCurly expression RightCurly									#capture_expression_
+	| ClosedRange expression															#pack_expansion_expression_
+	| expression packifying_operator													#packifying_expression_
 	;
 
 aggregate_initialization_expression
@@ -852,59 +842,94 @@ then_type_expression_or_then_block
 	;
 
 using_clause
-	: KeywordUsing Identifier;
+	: KeywordUsing Identifier
+	;
 
 in_clause
-	: Identifier KeywordIn attributes? expression;
+	: Identifier KeywordIn attributes? expression
+	;
+
+if_clause
+	: KeywordIf expression
+	;
+
+else_clause
+	: KeywordElse expression_or_block
+	;
+
+final_clause
+	: KeywordFinal expression_or_block
+	;
+
+else_type_clause
+	: KeywordElse type_expression_or_block
+	;
+
+final_type_clause
+	: KeywordFinal type_expression_or_block
+	;
 
 if_expression
 	: KeywordIf expression using_clause? (Comma expression using_clause?)* then_expression_or_block  
-	(KeywordElse expression_or_block)?;
+	else_clause?
+	;
 
 while_expression
 	: KeywordWhile KeywordEach? expression using_clause? (Comma expression using_clause?)* then_expression_or_block  
 	then_expression_or_then_block?
-    (KeywordElse expression_or_block)?;
+    final_clause?
+	;
 
 repeat_while_expression
 	: KeywordRepeat KeywordEach? then_expression_or_block  
 	KeywordWhile expression using_clause? (Comma expression using_clause?)*
 	then_expression_or_then_block?
-	(KeywordElse expression_or_block)?;
+	final_clause?
+	;
 
 for_expression
-	: KeywordFor KeywordEach? in_clause using_clause? (Comma in_clause using_clause?)* require_clause?
+	: KeywordFor KeywordEach? in_clause using_clause? (Comma in_clause using_clause?)* if_clause? require_clause?
 	then_expression_or_block 
 	then_expression_or_then_block?
-	(KeywordElse expression_or_block)?;
+	else_clause?
+	final_clause?
+	;
 
 if_type_expression
 	: KeywordIf expression using_clause? (Comma expression using_clause?)* then_type_expression_or_block  
-	(KeywordElse type_expression_or_block)?;
+	else_type_clause?
+	;
 
 while_type_expression
 	: KeywordWhile KeywordEach? expression using_clause? (Comma expression using_clause?)* then_type_expression_or_block  
 	then_type_expression_or_then_block?
-    (KeywordElse expression_or_block)?;
+    final_type_clause?
+	;
 
 repeat_while_type_expression
 	: KeywordRepeat KeywordEach? then_expression_or_block  
 	KeywordWhile expression using_clause? (Comma expression using_clause?)*
 	then_type_expression_or_then_block?
-	(KeywordElse type_expression_or_block)?;
+	final_type_clause?
+	;
 
 for_type_expression
-	: KeywordFor in_clause using_clause? (Comma in_clause using_clause?)* require_clause?
+	: KeywordFor in_clause using_clause? (Comma in_clause using_clause?)* if_clause? require_clause?
 	then_type_expression_or_block 
 	then_type_expression_or_then_block?
-	(KeywordElse type_expression_or_block)?;
+	else_type_clause?
+	final_type_clause?
+	;
 
 match_case
-	: match_case_label Colon (expression | code_block);
+	: match_case_label Colon (expression | code_block)
+	;
 match_case_label
-	: attributes? match_item_list;
+	: attributes? match_item_list
+	;
 match_item_list
-	: pattern require_clause? (Comma pattern require_clause?)*;
+	: pattern require_clause? (Comma pattern require_clause?)*
+	;
 
 type_expression
 	: Identifier																										#identifier_type_expression_
@@ -951,6 +976,17 @@ basic_type
 	| string_type
 	| comptime_type
 	| type_type
+	| pack_type
+	;
+
+pack_type
+	: LeftCurly RightCurly
+	| LeftCurly pack_type_element (Comma pack_type_element)* Comma RightCurly
+	| LeftCurly ClosedRange RightCurly
+	;
+
+pack_type_element
+	: type_expression
 	;
 
 collection_type
@@ -964,7 +1000,7 @@ never_type
 	: KeywordNever;
 
 tuple_type
-    : LeftParenthese ((tuple_type_element Comma)+ tuple_type_element?)? RightParenthese
+    : LeftParenthese tuple_type_element (Comma tuple_type_element)* Comma? RightParenthese
 	| LeftParenthese ClosedRange RightParenthese
 	;
 
@@ -1096,6 +1132,16 @@ literal
 	| default_literal
 	| array_literal
 	| tuple_literal
+	| pack_literal
+	;
+
+pack_literal
+	: LeftCurly RightCurly
+	| LeftCurly pack_element (Comma pack_element)* Comma? RightCurly
+	;
+
+pack_element
+	: expression
 	;
 
 numeric_literal
